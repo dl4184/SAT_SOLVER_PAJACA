@@ -93,16 +93,16 @@ Izvajanje programa
 
 Kako to nastaviti vhode v pyCharmu? Zgoraj desno edit configuration-> Script parameters ->test.txt output.txt
 """
-# clauses, noVar, noClauses = readFile(sys.argv[1])
-#
-# satisfiable, clauses = basic_DPLL(clauses, [])
-#
-# print("Satisfiable: " + str(satisfiable))
-# print(clauses)
-#
-# text_file = open(sys.argv[2], "w")
-# if satisfiable:
-#     text_file.write(', '.join(str(x) for x in clauses))
-# else:
-#     text_file.write("0")
-# text_file.close()
+clauses, noVar, noClauses = readFile(sys.argv[1])
+
+satisfiable, clauses = basic_DPLL(clauses, [])
+
+print("Satisfiable: " + str(satisfiable))
+print(clauses)
+
+text_file = open(sys.argv[2], "w")
+if satisfiable:
+    text_file.write(', '.join(str(x) for x in clauses))
+else:
+    text_file.write("0")
+text_file.close()
