@@ -25,13 +25,15 @@ def simplifyunit(formula, var):
     newformula = []
     for clause in formula:
         if -var in clause:
-            clause.remove(-var)
-            newformula.append(clause)
+            new = deepcopy(clause)
+            new.remove(-var)
+            newformula.append(new)
         elif not (var in clause):
             newformula.append(clause)
     return newformula
 
-#p,n potrebujemo za odločitev o menjavi
+
+# p,n potrebujemo za odločitev o menjavi
 def simplify(formula, var):
     p = 0
     n = 0
@@ -40,8 +42,9 @@ def simplify(formula, var):
         if var in clause:
             p += 1
         elif -var in clause:
-            clause.remove(-var)
-            newformula.append(clause)
+            new=deepcopy(clause)
+            new.remove(-var)
+            newformula.append(new)
             n += 1
         else:
             newformula.append(clause)
@@ -127,10 +130,11 @@ def DPLL(form):
                 if guessval == val:
                     val.append(-wrong)
                     guessval = []
+                    formula = simplifyunit(formula,-wrong)
                 else:
                     guessval.append(-wrong)
                     guessformula = guessformulas.pop()
-
+                    guessformula=simplifyunit(guessformula,-wrong)
             else:
                 guessformulas.append(guessformula)
                 guessformula2, p, n = simplify(guessformula, var)
