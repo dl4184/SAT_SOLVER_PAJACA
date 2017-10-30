@@ -31,7 +31,7 @@ def simplifyunit(formula, var):
             newformula.append(clause)
     return newformula
 
-
+#p,n potrebujemo za odločitev o menjavi
 def simplify(formula, var):
     p = 0
     n = 0
@@ -49,7 +49,6 @@ def simplify(formula, var):
 
 
 # tudi unit caluse iščemo enega  po enega
-
 def findvar(formula):
     # morda ni potrebno
     if len(formula) > 0:
@@ -68,35 +67,49 @@ def findvar(formula):
         return "tavt", None
 
 
-def DPLL(formula):
+def flatten(l):
+    out = []
+    for i in l:
+        if isinstance(i, int):
+            out += [i]
+        else:
+            out += flatten(i)
+    return out
+
+
+def DPLL(form):
+    formula = deepcopy(form)
     sat = None
     val = []
     guessformula = []
     guessformulas = []
     guessval = []
     while sat is None:
+        # zagotovo reševanje
         if len(guessval) == 0:
-            print("zago")
             unit, var = findvar(formula)
+            # najdemo vse unit clause
             while unit is True:
                 formula = simplifyunit(formula, var)
                 val.append(var)
                 unit, var = findvar(formula)
             if unit == "tavt":
                 sat = True
-                out = (True, val)
+                out = val
             elif unit == "cont":
                 sat = False
-                out = (False, [])
+                out = []
+
+            # izberemo literal iz najkrajšega clause in ga morda zamenjamo z negacijo
             else:
                 guessformula, p, n = simplify(formula, var)
-                print(p, n, var, "1")
                 redo = random.randrange(1, p + n + 1)
                 if redo <= p:
                     guessval = [val, var]
                 else:
                     guessval = [val, -var]
                     guessformula = simplifyunit(formula, -var)
+        # ugibanje
         else:
             unit, var = findvar(guessformula)
             while unit is True:
@@ -106,8 +119,7 @@ def DPLL(formula):
             # najde pravo rešitev
             if unit == "tavt":
                 sat = True
-                # to je list of lists, manjka flatten
-                out = (True, guessval)
+                out = guessval
             # ugibanje je bilo napačno
             elif unit == "cont":
                 wrong = guessval[1]
@@ -122,7 +134,6 @@ def DPLL(formula):
             else:
                 guessformulas.append(guessformula)
                 guessformula2, p, n = simplify(guessformula, var)
-                print(p, n, var, "2")
                 redo = random.randrange(1, p + n + 1)
                 if redo <= p:
                     guessval = [guessval, var]
@@ -130,4 +141,6 @@ def DPLL(formula):
                 else:
                     guessval = [guessval, -var]
                     guessformula = simplifyunit(guessformula, -var)
-    return out
+
+    out = flatten(out)
+    return sat, out
