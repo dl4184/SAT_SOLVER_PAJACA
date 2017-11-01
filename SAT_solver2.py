@@ -5,21 +5,17 @@ import random
 def readfile(name):
     with open(name) as f:
         content = f.readlines()
-    nuclauses = 0
-    nuvar = 0
     formula = []
     for line in content:
         line = line.split()
-        if line[0] == 'c':
+        if len(line)==0:
             pass
-        elif line[0] == 'p':
-            nuvar = int(line[2])
-            nuclauses = int(line[3])
+        elif line[0] == 'c' or line[0] == '0' or line[0]=="%" or line[0] == 'p':
+            pass
         else:
             formula.append([int(x) for x in line[0:-1]])
 
-    return formula, nuvar, nuclauses
-
+    return formula
 
 def simplifyunit(formula, var):
     newformula = []
@@ -53,7 +49,6 @@ def simplify(formula, var):
 
 # tudi unit caluse iščemo enega  po enega
 def findvar(formula):
-    # morda ni potrebno
     if len(formula) > 0:
         clause = min(formula, key=len)
         # če je formula protislovje
@@ -122,7 +117,7 @@ def DPLL(form):
             # najde pravo rešitev
             if unit == "tavt":
                 sat = True
-                out = guessval
+                out = flatten(guessval)
             # ugibanje je bilo napačno
             elif unit == "cont":
                 wrong = guessval[1]
@@ -146,5 +141,4 @@ def DPLL(form):
                     guessval = [guessval, -var]
                     guessformula = simplifyunit(guessformula, -var)
 
-    out = flatten(out)
     return sat, out
