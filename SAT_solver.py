@@ -2,6 +2,8 @@ import copy
 import os
 import sys
 import time
+import cProfile
+
 
 
 # funkcija za ponastavitev logično formulo clauses s spremenljivko l
@@ -168,6 +170,7 @@ if sys.argv[1] == "run" and sys.argv[2] == "test":
 
     testFiles = "test_files/" + sys.argv[3] + "/" + sys.argv[4] + "/"
     if os.path.isdir(testFiles):
+        t1 = time.time()
         for filename in os.listdir(testFiles):
             t = time.time()
             s = SAT()
@@ -178,10 +181,11 @@ if sys.argv[1] == "run" and sys.argv[2] == "test":
                 satisfied, val = s.dll_iterative()
             elapsed = time.time() - t
             if satisfied == all_satisfiable:
-                print(filename + ": OK - TIME: " + str(elapsed)+" s")
+                pass#print(filename + ": OK - TIME: " + str(elapsed)+" s")
             else:
                 print("Wrong result in file: " + filename)
                 break
+        print("DONE " + str(time.time() - t1) + " s")
     else:
         print(
             "Wrong use of 'run test' command! To use test command write command like 'python SAT_solver.py run test UFF 1' ")
@@ -189,6 +193,7 @@ if sys.argv[1] == "run" and sys.argv[2] == "test":
 elif sys.argv[1] == "sudoku":
     testFiles = ["sudoku_easy.txt", "sudoku_hard.txt", "sudoku_mini.txt"]
     testSolution = ["sudoku_easy_solution.txt", "sudoku_hard_solution.txt", "sudoku_mini_solution.txt"]
+    t1 = time.time()
     for i in range(len(testFiles)):
         t = time.time()
         s = SAT()
@@ -214,7 +219,7 @@ elif sys.argv[1] == "sudoku":
             print(testFiles[i]+": OK - TIME: "+str(elapsed)+" s")
         else:
             print(testFiles[i] + ": WRONG - TIME: " + str(elapsed)+" s")
-
+    print("DONE "+str(time.time() - t1)+" s")
 # drugače sprejmemo dva vhodna parametra vhodno in izhodno datoteko
 else:
     t = time.time()
