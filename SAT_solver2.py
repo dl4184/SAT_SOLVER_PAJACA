@@ -2,7 +2,9 @@ import os
 import random
 import sys
 import time
-from copy import deepcopy
+from bisect import bisect_left
+
+# from copy import deepcopy pocasno fuj fej
 
 
 def readfile(name):
@@ -16,20 +18,43 @@ def readfile(name):
         elif line[0] == 'c' or line[0] == '0' or line[0] == "%" or line[0] == 'p':
             pass
         else:
-            formula.append([int(x) for x in line[0:-1]])
+            formula.append(sorted(set([int(x) for x in line[0:-1]])))
 
     return formula
+
+"""
+def binary_search(a, x, lo=0, hi=None):
+    hi = hi if hi is not None else len(a)
+    pos = bisect_left(a, x, lo, hi)
+    return (pos if pos != hi and a[pos] == x else -1)
 
 
 def simplifyunit(formula, var):
     newformula = []
     for clause in formula:
-        if -var in clause:
-            new = []
-            new.extend(clause)
+        len_c = len(clause)
+        i_neg = binary_search(clause, -var, 0, len_c)
+        if i_neg != -1:
+            new = copy1dList(clause)
+            del new[i_neg]
+            newformula.append(new)
+        else:
+            i_pos = binary_search(clause, var, 0, len_c)
+            if not (i_pos != -1):
+                newformula.append(clause)
+    return newformula
+"""
+
+def simplifyunit(formula, var):
+    newformula = []
+    for clause in formula:
+        if var in clause:
+            pass
+        elif -var in clause:
+            new = copy1dList(clause)
             new.remove(-var)
             newformula.append(new)
-        elif not (var in clause):
+        else:
             newformula.append(clause)
     return newformula
 
@@ -43,8 +68,7 @@ def simplify(formula, var):
         if var in clause:
             p += 1
         elif -var in clause:
-            new = []
-            new.extend(clause)
+            new = copy1dList(clause)
             new.remove(-var)
             newformula.append(new)
             n += 1
@@ -81,8 +105,22 @@ def flatten(l):
     return out
 
 
+def copy2dList(L1):
+    len_gf = len(L1)
+    L2 = [[] for _ in range(len_gf)]
+    for h, g in enumerate(L2):
+        g.extend(L1[h])
+    return L2
+
+def copy1dList(L1):
+    L2 = []
+    L2.extend(L1)
+    return L2
+
+
 def DPLL(form):
-    formula = deepcopy(form)
+    # formula = deepcopy(form)
+    formula = copy2dList(form)
     sat = None
     val = []
     guessformula = []
@@ -144,12 +182,9 @@ def DPLL(form):
                     guessval = [guessval, var]
 
                     # hitreje
-                    len_gf = len(guessformula2)
-                    guessformula = [[] for _ in range(len_gf)]
-                    for h, g in enumerate(guessformula):
-                        g.extend(guessformula2[h])
+                    guessformula = copy2dList(guessformula2)
 
-                    #guessformula = deepcopy(guessformula2)
+                    # guessformula = deepcopy(guessformula2)
                 else:
                     guessval = [guessval, -var]
                     guessformula = simplifyunit(guessformula, -var)
@@ -171,7 +206,7 @@ if sys.argv[1] == "run" and sys.argv[2] == "test":
             satisfied, val = DPLL(formula)
             elapsed = time.time() - t
             if satisfied == all_satisfiable:
-               pass# print(filename + ": OK - TIME: " + str(elapsed) + " s")
+                pass  # print(filename + ": OK - TIME: " + str(elapsed) + " s")
             else:
                 print("Wrong result in file: " + filename)
                 break
