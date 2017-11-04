@@ -133,6 +133,7 @@ def DPLL(form):
     guessformula = []
     guessformulas = []
     guessval = []
+    guesses=0
     while sat is None:
         # zagotovo reševanje
         if len(guessval) == 0:
@@ -153,6 +154,7 @@ def DPLL(form):
             else:
                 guessformula= simplifyunit(formula, var)
                 guessval = [val, var]
+                guesses=1
 
         # ugibanje
         else:
@@ -167,20 +169,23 @@ def DPLL(form):
                 out = flatten(guessval)
             # ugibanje je bilo napačno
             elif unit == "cont":
-                wrong = guessval[1]
-                guessval = guessval[0]
-                if guessval == val:
+                if guesses==1:
+                    wrong = guessval[1]
                     val.append(-wrong)
                     guessval = []
                     formula = simplifyunit(formula,-wrong)
                 else:
+                    wrong = guessval[1]
+                    guessval = guessval[0]
                     guessval.append(-wrong)
                     guessformula = guessformulas.pop()
                     guessformula=simplifyunit(guessformula,-wrong)
+                    guesses-=1
             else:
                 guessformulas.append(guessformula)
                 guessformula = simplifyunit(guessformula, var)
                 guessval = [guessval, var]
+                guesses+=1
 
 
 
