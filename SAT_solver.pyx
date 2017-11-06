@@ -23,16 +23,19 @@ def readfile(name):
     with open(name) as f:
         content = f.readlines()
     formula = []
+    unsat = False
     for line in content:
         line = line.split()
-        if len(line) == 0:
+        if line ==['0']:
+            unsat = True
+        elif len(line) == 0:
             pass
         elif line[0] == 'c' or line[0] == '0' or line[0] == "%" or line[0] == 'p':
             pass
         else:
             formula.append([int(x) for x in line[0:-1]])
 
-    return formula
+    return formula, unsat
 
 
 def simplifyunit(formula, var):

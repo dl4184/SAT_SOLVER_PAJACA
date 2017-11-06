@@ -741,7 +741,7 @@ static const char *__pyx_f[] = {
 /*--- Type declarations ---*/
 struct __pyx_obj_10SAT_solver___pyx_scope_struct__flatten;
 
-/* "SAT_solver.pyx":107
+/* "SAT_solver.pyx":110
  * 
  * 
  * def flatten(l, ltypes=collections.Sequence):             # <<<<<<<<<<<<<<
@@ -1388,6 +1388,7 @@ static const char __pyx_k_items[] = "items";
 static const char __pyx_k_range[] = "range";
 static const char __pyx_k_split[] = "split";
 static const char __pyx_k_throw[] = "throw";
+static const char __pyx_k_unsat[] = "unsat";
 static const char __pyx_k_wrong[] = "wrong";
 static const char __pyx_k_append[] = "append";
 static const char __pyx_k_clause[] = "clause";
@@ -1513,6 +1514,7 @@ static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_throw;
 static PyObject *__pyx_n_s_time;
 static PyObject *__pyx_n_s_unit;
+static PyObject *__pyx_n_s_unsat;
 static PyObject *__pyx_n_s_v;
 static PyObject *__pyx_n_s_val;
 static PyObject *__pyx_n_s_values;
@@ -1883,6 +1885,7 @@ static PyObject *__pyx_pf_10SAT_solver_4readfile(CYTHON_UNUSED PyObject *__pyx_s
   PyObject *__pyx_v_f = NULL;
   PyObject *__pyx_v_content = NULL;
   PyObject *__pyx_v_formula = NULL;
+  int __pyx_v_unsat;
   PyObject *__pyx_v_line = NULL;
   PyObject *__pyx_v_x = NULL;
   PyObject *__pyx_r = NULL;
@@ -1963,7 +1966,7 @@ static PyObject *__pyx_pf_10SAT_solver_4readfile(CYTHON_UNUSED PyObject *__pyx_s
  *     with open(name) as f:
  *         content = f.readlines()             # <<<<<<<<<<<<<<
  *     formula = []
- *     for line in content:
+ *     unsat = False
  */
           __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_f, __pyx_n_s_readlines); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_2);
@@ -2073,8 +2076,8 @@ static PyObject *__pyx_pf_10SAT_solver_4readfile(CYTHON_UNUSED PyObject *__pyx_s
  *     with open(name) as f:
  *         content = f.readlines()
  *     formula = []             # <<<<<<<<<<<<<<
+ *     unsat = False
  *     for line in content:
- *         line = line.split()
  */
   __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -2084,35 +2087,44 @@ static PyObject *__pyx_pf_10SAT_solver_4readfile(CYTHON_UNUSED PyObject *__pyx_s
   /* "SAT_solver.pyx":26
  *         content = f.readlines()
  *     formula = []
+ *     unsat = False             # <<<<<<<<<<<<<<
+ *     for line in content:
+ *         line = line.split()
+ */
+  __pyx_v_unsat = 0;
+
+  /* "SAT_solver.pyx":27
+ *     formula = []
+ *     unsat = False
  *     for line in content:             # <<<<<<<<<<<<<<
  *         line = line.split()
- *         if len(line) == 0:
+ *         if line ==['0']:
  */
-  if (unlikely(!__pyx_v_content)) { __Pyx_RaiseUnboundLocalError("content"); __PYX_ERR(0, 26, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_content)) { __Pyx_RaiseUnboundLocalError("content"); __PYX_ERR(0, 27, __pyx_L1_error) }
   if (likely(PyList_CheckExact(__pyx_v_content)) || PyTuple_CheckExact(__pyx_v_content)) {
     __pyx_t_1 = __pyx_v_content; __Pyx_INCREF(__pyx_t_1); __pyx_t_12 = 0;
     __pyx_t_13 = NULL;
   } else {
-    __pyx_t_12 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_content); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+    __pyx_t_12 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_content); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_13 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 26, __pyx_L1_error)
+    __pyx_t_13 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 27, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_13)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_12 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_12); __Pyx_INCREF(__pyx_t_2); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 26, __pyx_L1_error)
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_12); __Pyx_INCREF(__pyx_t_2); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 27, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_12 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_12); __Pyx_INCREF(__pyx_t_2); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 26, __pyx_L1_error)
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_12); __Pyx_INCREF(__pyx_t_2); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 27, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -2122,7 +2134,7 @@ static PyObject *__pyx_pf_10SAT_solver_4readfile(CYTHON_UNUSED PyObject *__pyx_s
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 26, __pyx_L1_error)
+          else __PYX_ERR(0, 27, __pyx_L1_error)
         }
         break;
       }
@@ -2131,14 +2143,14 @@ static PyObject *__pyx_pf_10SAT_solver_4readfile(CYTHON_UNUSED PyObject *__pyx_s
     __Pyx_XDECREF_SET(__pyx_v_line, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "SAT_solver.pyx":27
- *     formula = []
+    /* "SAT_solver.pyx":28
+ *     unsat = False
  *     for line in content:
  *         line = line.split()             # <<<<<<<<<<<<<<
- *         if len(line) == 0:
- *             pass
+ *         if line ==['0']:
+ *             unsat = True
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_line, __pyx_n_s_split); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 27, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_line, __pyx_n_s_split); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 28, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
@@ -2151,158 +2163,205 @@ static PyObject *__pyx_pf_10SAT_solver_4readfile(CYTHON_UNUSED PyObject *__pyx_s
       }
     }
     if (__pyx_t_5) {
-      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 28, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     } else {
-      __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 28, __pyx_L1_error)
     }
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF_SET(__pyx_v_line, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "SAT_solver.pyx":28
+    /* "SAT_solver.pyx":29
  *     for line in content:
  *         line = line.split()
- *         if len(line) == 0:             # <<<<<<<<<<<<<<
+ *         if line ==['0']:             # <<<<<<<<<<<<<<
+ *             unsat = True
+ *         elif len(line) == 0:
+ */
+    __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 29, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx_kp_s_0);
+    __Pyx_GIVEREF(__pyx_kp_s_0);
+    PyList_SET_ITEM(__pyx_t_2, 0, __pyx_kp_s_0);
+    __pyx_t_4 = PyObject_RichCompare(__pyx_v_line, __pyx_t_2, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 29, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 29, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    if (__pyx_t_11) {
+
+      /* "SAT_solver.pyx":30
+ *         line = line.split()
+ *         if line ==['0']:
+ *             unsat = True             # <<<<<<<<<<<<<<
+ *         elif len(line) == 0:
+ *             pass
+ */
+      __pyx_v_unsat = 1;
+
+      /* "SAT_solver.pyx":29
+ *     for line in content:
+ *         line = line.split()
+ *         if line ==['0']:             # <<<<<<<<<<<<<<
+ *             unsat = True
+ *         elif len(line) == 0:
+ */
+      goto __pyx_L19;
+    }
+
+    /* "SAT_solver.pyx":31
+ *         if line ==['0']:
+ *             unsat = True
+ *         elif len(line) == 0:             # <<<<<<<<<<<<<<
  *             pass
  *         elif line[0] == 'c' or line[0] == '0' or line[0] == "%" or line[0] == 'p':
  */
-    __pyx_t_14 = PyObject_Length(__pyx_v_line); if (unlikely(__pyx_t_14 == ((Py_ssize_t)-1))) __PYX_ERR(0, 28, __pyx_L1_error)
+    __pyx_t_14 = PyObject_Length(__pyx_v_line); if (unlikely(__pyx_t_14 == ((Py_ssize_t)-1))) __PYX_ERR(0, 31, __pyx_L1_error)
     __pyx_t_11 = ((__pyx_t_14 == 0) != 0);
     if (__pyx_t_11) {
       goto __pyx_L19;
     }
 
-    /* "SAT_solver.pyx":30
- *         if len(line) == 0:
+    /* "SAT_solver.pyx":33
+ *         elif len(line) == 0:
  *             pass
  *         elif line[0] == 'c' or line[0] == '0' or line[0] == "%" or line[0] == 'p':             # <<<<<<<<<<<<<<
  *             pass
  *         else:
  */
-    __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_line, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 30, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_10 = (__Pyx_PyString_Equals(__pyx_t_2, __pyx_n_s_c, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 30, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_line, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_10 = (__Pyx_PyString_Equals(__pyx_t_4, __pyx_n_s_c, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 33, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (!__pyx_t_10) {
     } else {
       __pyx_t_11 = __pyx_t_10;
       goto __pyx_L20_bool_binop_done;
     }
-    __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_line, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 30, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_10 = (__Pyx_PyString_Equals(__pyx_t_2, __pyx_kp_s_0, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 30, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_line, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_10 = (__Pyx_PyString_Equals(__pyx_t_4, __pyx_kp_s_0, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 33, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (!__pyx_t_10) {
     } else {
       __pyx_t_11 = __pyx_t_10;
       goto __pyx_L20_bool_binop_done;
     }
-    __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_line, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 30, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_10 = (__Pyx_PyString_Equals(__pyx_t_2, __pyx_kp_s__2, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 30, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_line, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_10 = (__Pyx_PyString_Equals(__pyx_t_4, __pyx_kp_s__2, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 33, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (!__pyx_t_10) {
     } else {
       __pyx_t_11 = __pyx_t_10;
       goto __pyx_L20_bool_binop_done;
     }
-    __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_line, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 30, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_10 = (__Pyx_PyString_Equals(__pyx_t_2, __pyx_n_s_p, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 30, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_line, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_10 = (__Pyx_PyString_Equals(__pyx_t_4, __pyx_n_s_p, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 33, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_11 = __pyx_t_10;
     __pyx_L20_bool_binop_done:;
     if (__pyx_t_11) {
       goto __pyx_L19;
     }
 
-    /* "SAT_solver.pyx":33
+    /* "SAT_solver.pyx":36
  *             pass
  *         else:
  *             formula.append([int(x) for x in line[0:-1]])             # <<<<<<<<<<<<<<
  * 
- *     return formula
+ *     return formula, unsat
  */
     /*else*/ {
-      __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 33, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_4 = __Pyx_PyObject_GetSlice(__pyx_v_line, 0, -1L, NULL, NULL, &__pyx_slice__3, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
+      __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 36, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      if (likely(PyList_CheckExact(__pyx_t_4)) || PyTuple_CheckExact(__pyx_t_4)) {
-        __pyx_t_5 = __pyx_t_4; __Pyx_INCREF(__pyx_t_5); __pyx_t_14 = 0;
+      __pyx_t_2 = __Pyx_PyObject_GetSlice(__pyx_v_line, 0, -1L, NULL, NULL, &__pyx_slice__3, 1, 1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      if (likely(PyList_CheckExact(__pyx_t_2)) || PyTuple_CheckExact(__pyx_t_2)) {
+        __pyx_t_5 = __pyx_t_2; __Pyx_INCREF(__pyx_t_5); __pyx_t_14 = 0;
         __pyx_t_15 = NULL;
       } else {
-        __pyx_t_14 = -1; __pyx_t_5 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 33, __pyx_L1_error)
+        __pyx_t_14 = -1; __pyx_t_5 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 36, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
-        __pyx_t_15 = Py_TYPE(__pyx_t_5)->tp_iternext; if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 33, __pyx_L1_error)
+        __pyx_t_15 = Py_TYPE(__pyx_t_5)->tp_iternext; if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 36, __pyx_L1_error)
       }
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       for (;;) {
         if (likely(!__pyx_t_15)) {
           if (likely(PyList_CheckExact(__pyx_t_5))) {
             if (__pyx_t_14 >= PyList_GET_SIZE(__pyx_t_5)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_4 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_14); __Pyx_INCREF(__pyx_t_4); __pyx_t_14++; if (unlikely(0 < 0)) __PYX_ERR(0, 33, __pyx_L1_error)
+            __pyx_t_2 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_14); __Pyx_INCREF(__pyx_t_2); __pyx_t_14++; if (unlikely(0 < 0)) __PYX_ERR(0, 36, __pyx_L1_error)
             #else
-            __pyx_t_4 = PySequence_ITEM(__pyx_t_5, __pyx_t_14); __pyx_t_14++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_4);
+            __pyx_t_2 = PySequence_ITEM(__pyx_t_5, __pyx_t_14); __pyx_t_14++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_2);
             #endif
           } else {
             if (__pyx_t_14 >= PyTuple_GET_SIZE(__pyx_t_5)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_5, __pyx_t_14); __Pyx_INCREF(__pyx_t_4); __pyx_t_14++; if (unlikely(0 < 0)) __PYX_ERR(0, 33, __pyx_L1_error)
+            __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_5, __pyx_t_14); __Pyx_INCREF(__pyx_t_2); __pyx_t_14++; if (unlikely(0 < 0)) __PYX_ERR(0, 36, __pyx_L1_error)
             #else
-            __pyx_t_4 = PySequence_ITEM(__pyx_t_5, __pyx_t_14); __pyx_t_14++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_4);
+            __pyx_t_2 = PySequence_ITEM(__pyx_t_5, __pyx_t_14); __pyx_t_14++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_2);
             #endif
           }
         } else {
-          __pyx_t_4 = __pyx_t_15(__pyx_t_5);
-          if (unlikely(!__pyx_t_4)) {
+          __pyx_t_2 = __pyx_t_15(__pyx_t_5);
+          if (unlikely(!__pyx_t_2)) {
             PyObject* exc_type = PyErr_Occurred();
             if (exc_type) {
               if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(0, 33, __pyx_L1_error)
+              else __PYX_ERR(0, 36, __pyx_L1_error)
             }
             break;
           }
-          __Pyx_GOTREF(__pyx_t_4);
+          __Pyx_GOTREF(__pyx_t_2);
         }
-        __Pyx_XDECREF_SET(__pyx_v_x, __pyx_t_4);
-        __pyx_t_4 = 0;
-        __pyx_t_4 = __Pyx_PyNumber_Int(__pyx_v_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_t_4))) __PYX_ERR(0, 33, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __Pyx_XDECREF_SET(__pyx_v_x, __pyx_t_2);
+        __pyx_t_2 = 0;
+        __pyx_t_2 = __Pyx_PyNumber_Int(__pyx_v_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_2);
+        if (unlikely(__Pyx_ListComp_Append(__pyx_t_4, (PyObject*)__pyx_t_2))) __PYX_ERR(0, 36, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       }
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_16 = __Pyx_PyList_Append(__pyx_v_formula, __pyx_t_2); if (unlikely(__pyx_t_16 == ((int)-1))) __PYX_ERR(0, 33, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __pyx_t_16 = __Pyx_PyList_Append(__pyx_v_formula, __pyx_t_4); if (unlikely(__pyx_t_16 == ((int)-1))) __PYX_ERR(0, 36, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
     __pyx_L19:;
 
-    /* "SAT_solver.pyx":26
- *         content = f.readlines()
+    /* "SAT_solver.pyx":27
  *     formula = []
+ *     unsat = False
  *     for line in content:             # <<<<<<<<<<<<<<
  *         line = line.split()
- *         if len(line) == 0:
+ *         if line ==['0']:
  */
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":35
+  /* "SAT_solver.pyx":38
  *             formula.append([int(x) for x in line[0:-1]])
  * 
- *     return formula             # <<<<<<<<<<<<<<
+ *     return formula, unsat             # <<<<<<<<<<<<<<
  * 
  * 
  */
   __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_unsat); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(__pyx_v_formula);
-  __pyx_r = __pyx_v_formula;
+  __Pyx_GIVEREF(__pyx_v_formula);
+  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_formula);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
+  __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
   goto __pyx_L0;
 
   /* "SAT_solver.pyx":22
@@ -2332,7 +2391,7 @@ static PyObject *__pyx_pf_10SAT_solver_4readfile(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "SAT_solver.pyx":38
+/* "SAT_solver.pyx":41
  * 
  * 
  * def simplifyunit(formula, var):             # <<<<<<<<<<<<<<
@@ -2372,11 +2431,11 @@ static PyObject *__pyx_pw_10SAT_solver_7simplifyunit(PyObject *__pyx_self, PyObj
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_var)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("simplifyunit", 1, 2, 2, 1); __PYX_ERR(0, 38, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("simplifyunit", 1, 2, 2, 1); __PYX_ERR(0, 41, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "simplifyunit") < 0)) __PYX_ERR(0, 38, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "simplifyunit") < 0)) __PYX_ERR(0, 41, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -2389,7 +2448,7 @@ static PyObject *__pyx_pw_10SAT_solver_7simplifyunit(PyObject *__pyx_self, PyObj
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("simplifyunit", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 38, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("simplifyunit", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 41, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("SAT_solver.simplifyunit", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2421,19 +2480,19 @@ static PyObject *__pyx_pf_10SAT_solver_6simplifyunit(CYTHON_UNUSED PyObject *__p
   int __pyx_t_11;
   __Pyx_RefNannySetupContext("simplifyunit", 0);
 
-  /* "SAT_solver.pyx":39
+  /* "SAT_solver.pyx":42
  * 
  * def simplifyunit(formula, var):
  *     newformula = []             # <<<<<<<<<<<<<<
  *     for clause in formula:
  *         if var in clause:
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 39, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_newformula = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":40
+  /* "SAT_solver.pyx":43
  * def simplifyunit(formula, var):
  *     newformula = []
  *     for clause in formula:             # <<<<<<<<<<<<<<
@@ -2444,26 +2503,26 @@ static PyObject *__pyx_pf_10SAT_solver_6simplifyunit(CYTHON_UNUSED PyObject *__p
     __pyx_t_1 = __pyx_v_formula; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_formula); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_formula); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 40, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 43, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 40, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 40, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 43, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 40, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -2473,7 +2532,7 @@ static PyObject *__pyx_pf_10SAT_solver_6simplifyunit(CYTHON_UNUSED PyObject *__p
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 40, __pyx_L1_error)
+          else __PYX_ERR(0, 43, __pyx_L1_error)
         }
         break;
       }
@@ -2482,41 +2541,41 @@ static PyObject *__pyx_pf_10SAT_solver_6simplifyunit(CYTHON_UNUSED PyObject *__p
     __Pyx_XDECREF_SET(__pyx_v_clause, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "SAT_solver.pyx":41
+    /* "SAT_solver.pyx":44
  *     newformula = []
  *     for clause in formula:
  *         if var in clause:             # <<<<<<<<<<<<<<
  *             pass
  *         elif -var in clause:
  */
-    __pyx_t_5 = (__Pyx_PySequence_ContainsTF(__pyx_v_var, __pyx_v_clause, Py_EQ)); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 41, __pyx_L1_error)
+    __pyx_t_5 = (__Pyx_PySequence_ContainsTF(__pyx_v_var, __pyx_v_clause, Py_EQ)); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 44, __pyx_L1_error)
     __pyx_t_6 = (__pyx_t_5 != 0);
     if (__pyx_t_6) {
       goto __pyx_L5;
     }
 
-    /* "SAT_solver.pyx":43
+    /* "SAT_solver.pyx":46
  *         if var in clause:
  *             pass
  *         elif -var in clause:             # <<<<<<<<<<<<<<
  *             new = copy1dList(clause)
  *             new.remove(-var)
  */
-    __pyx_t_4 = PyNumber_Negative(__pyx_v_var); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
+    __pyx_t_4 = PyNumber_Negative(__pyx_v_var); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_6 = (__Pyx_PySequence_ContainsTF(__pyx_t_4, __pyx_v_clause, Py_EQ)); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 43, __pyx_L1_error)
+    __pyx_t_6 = (__Pyx_PySequence_ContainsTF(__pyx_t_4, __pyx_v_clause, Py_EQ)); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_5 = (__pyx_t_6 != 0);
     if (__pyx_t_5) {
 
-      /* "SAT_solver.pyx":44
+      /* "SAT_solver.pyx":47
  *             pass
  *         elif -var in clause:
  *             new = copy1dList(clause)             # <<<<<<<<<<<<<<
  *             new.remove(-var)
  *             newformula.append(new)
  */
-      __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_copy1dList); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 44, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_copy1dList); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 47, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __pyx_t_8 = NULL;
       if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_7))) {
@@ -2529,13 +2588,13 @@ static PyObject *__pyx_pf_10SAT_solver_6simplifyunit(CYTHON_UNUSED PyObject *__p
         }
       }
       if (!__pyx_t_8) {
-        __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_v_clause); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_v_clause); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
       } else {
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_7)) {
           PyObject *__pyx_temp[2] = {__pyx_t_8, __pyx_v_clause};
-          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
           __Pyx_GOTREF(__pyx_t_4);
         } else
@@ -2543,19 +2602,19 @@ static PyObject *__pyx_pf_10SAT_solver_6simplifyunit(CYTHON_UNUSED PyObject *__p
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
           PyObject *__pyx_temp[2] = {__pyx_t_8, __pyx_v_clause};
-          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
           __Pyx_GOTREF(__pyx_t_4);
         } else
         #endif
         {
-          __pyx_t_9 = PyTuple_New(1+1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 44, __pyx_L1_error)
+          __pyx_t_9 = PyTuple_New(1+1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 47, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_9);
           __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_8); __pyx_t_8 = NULL;
           __Pyx_INCREF(__pyx_v_clause);
           __Pyx_GIVEREF(__pyx_v_clause);
           PyTuple_SET_ITEM(__pyx_t_9, 0+1, __pyx_v_clause);
-          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_9, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_9, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         }
@@ -2564,16 +2623,16 @@ static PyObject *__pyx_pf_10SAT_solver_6simplifyunit(CYTHON_UNUSED PyObject *__p
       __Pyx_XDECREF_SET(__pyx_v_new, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "SAT_solver.pyx":45
+      /* "SAT_solver.pyx":48
  *         elif -var in clause:
  *             new = copy1dList(clause)
  *             new.remove(-var)             # <<<<<<<<<<<<<<
  *             newformula.append(new)
  *         else:
  */
-      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_new, __pyx_n_s_remove); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 45, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_new, __pyx_n_s_remove); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 48, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_9 = PyNumber_Negative(__pyx_v_var); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 45, __pyx_L1_error)
+      __pyx_t_9 = PyNumber_Negative(__pyx_v_var); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 48, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
       __pyx_t_8 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_7))) {
@@ -2586,14 +2645,14 @@ static PyObject *__pyx_pf_10SAT_solver_6simplifyunit(CYTHON_UNUSED PyObject *__p
         }
       }
       if (!__pyx_t_8) {
-        __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 45, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         __Pyx_GOTREF(__pyx_t_4);
       } else {
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_7)) {
           PyObject *__pyx_temp[2] = {__pyx_t_8, __pyx_t_9};
-          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 45, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -2602,20 +2661,20 @@ static PyObject *__pyx_pf_10SAT_solver_6simplifyunit(CYTHON_UNUSED PyObject *__p
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
           PyObject *__pyx_temp[2] = {__pyx_t_8, __pyx_t_9};
-          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 45, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         } else
         #endif
         {
-          __pyx_t_10 = PyTuple_New(1+1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 45, __pyx_L1_error)
+          __pyx_t_10 = PyTuple_New(1+1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 48, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_10);
           __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_8); __pyx_t_8 = NULL;
           __Pyx_GIVEREF(__pyx_t_9);
           PyTuple_SET_ITEM(__pyx_t_10, 0+1, __pyx_t_9);
           __pyx_t_9 = 0;
-          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_10, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 45, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_10, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         }
@@ -2623,16 +2682,16 @@ static PyObject *__pyx_pf_10SAT_solver_6simplifyunit(CYTHON_UNUSED PyObject *__p
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-      /* "SAT_solver.pyx":46
+      /* "SAT_solver.pyx":49
  *             new = copy1dList(clause)
  *             new.remove(-var)
  *             newformula.append(new)             # <<<<<<<<<<<<<<
  *         else:
  *             newformula.append(clause)
  */
-      __pyx_t_11 = __Pyx_PyList_Append(__pyx_v_newformula, __pyx_v_new); if (unlikely(__pyx_t_11 == ((int)-1))) __PYX_ERR(0, 46, __pyx_L1_error)
+      __pyx_t_11 = __Pyx_PyList_Append(__pyx_v_newformula, __pyx_v_new); if (unlikely(__pyx_t_11 == ((int)-1))) __PYX_ERR(0, 49, __pyx_L1_error)
 
-      /* "SAT_solver.pyx":43
+      /* "SAT_solver.pyx":46
  *         if var in clause:
  *             pass
  *         elif -var in clause:             # <<<<<<<<<<<<<<
@@ -2642,7 +2701,7 @@ static PyObject *__pyx_pf_10SAT_solver_6simplifyunit(CYTHON_UNUSED PyObject *__p
       goto __pyx_L5;
     }
 
-    /* "SAT_solver.pyx":48
+    /* "SAT_solver.pyx":51
  *             newformula.append(new)
  *         else:
  *             newformula.append(clause)             # <<<<<<<<<<<<<<
@@ -2650,11 +2709,11 @@ static PyObject *__pyx_pf_10SAT_solver_6simplifyunit(CYTHON_UNUSED PyObject *__p
  * 
  */
     /*else*/ {
-      __pyx_t_11 = __Pyx_PyList_Append(__pyx_v_newformula, __pyx_v_clause); if (unlikely(__pyx_t_11 == ((int)-1))) __PYX_ERR(0, 48, __pyx_L1_error)
+      __pyx_t_11 = __Pyx_PyList_Append(__pyx_v_newformula, __pyx_v_clause); if (unlikely(__pyx_t_11 == ((int)-1))) __PYX_ERR(0, 51, __pyx_L1_error)
     }
     __pyx_L5:;
 
-    /* "SAT_solver.pyx":40
+    /* "SAT_solver.pyx":43
  * def simplifyunit(formula, var):
  *     newformula = []
  *     for clause in formula:             # <<<<<<<<<<<<<<
@@ -2664,7 +2723,7 @@ static PyObject *__pyx_pf_10SAT_solver_6simplifyunit(CYTHON_UNUSED PyObject *__p
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":49
+  /* "SAT_solver.pyx":52
  *         else:
  *             newformula.append(clause)
  *     return newformula             # <<<<<<<<<<<<<<
@@ -2676,7 +2735,7 @@ static PyObject *__pyx_pf_10SAT_solver_6simplifyunit(CYTHON_UNUSED PyObject *__p
   __pyx_r = __pyx_v_newformula;
   goto __pyx_L0;
 
-  /* "SAT_solver.pyx":38
+  /* "SAT_solver.pyx":41
  * 
  * 
  * def simplifyunit(formula, var):             # <<<<<<<<<<<<<<
@@ -2703,7 +2762,7 @@ static PyObject *__pyx_pf_10SAT_solver_6simplifyunit(CYTHON_UNUSED PyObject *__p
   return __pyx_r;
 }
 
-/* "SAT_solver.pyx":52
+/* "SAT_solver.pyx":55
  * 
  * 
  * def minimal(sez):             # <<<<<<<<<<<<<<
@@ -2741,32 +2800,32 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
   int __pyx_t_7;
   __Pyx_RefNannySetupContext("minimal", 0);
 
-  /* "SAT_solver.pyx":53
+  /* "SAT_solver.pyx":56
  * 
  * def minimal(sez):
  *     minVal = len(sez[-1])             # <<<<<<<<<<<<<<
  *     minList = []
  *     for a in sez:
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_sez, -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_sez, -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_minVal = __pyx_t_2;
 
-  /* "SAT_solver.pyx":54
+  /* "SAT_solver.pyx":57
  * def minimal(sez):
  *     minVal = len(sez[-1])
  *     minList = []             # <<<<<<<<<<<<<<
  *     for a in sez:
  *         mapVal = len(a)
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_minList = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":55
+  /* "SAT_solver.pyx":58
  *     minVal = len(sez[-1])
  *     minList = []
  *     for a in sez:             # <<<<<<<<<<<<<<
@@ -2777,26 +2836,26 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
     __pyx_t_1 = __pyx_v_sez; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_sez); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_sez); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 55, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 58, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 55, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 58, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 55, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 58, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 55, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 58, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 55, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 58, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -2806,7 +2865,7 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 55, __pyx_L1_error)
+          else __PYX_ERR(0, 58, __pyx_L1_error)
         }
         break;
       }
@@ -2815,17 +2874,17 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
     __Pyx_XDECREF_SET(__pyx_v_a, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "SAT_solver.pyx":56
+    /* "SAT_solver.pyx":59
  *     minList = []
  *     for a in sez:
  *         mapVal = len(a)             # <<<<<<<<<<<<<<
  *         if mapVal > minVal:
  *             continue
  */
-    __pyx_t_5 = PyObject_Length(__pyx_v_a); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 56, __pyx_L1_error)
+    __pyx_t_5 = PyObject_Length(__pyx_v_a); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 59, __pyx_L1_error)
     __pyx_v_mapVal = __pyx_t_5;
 
-    /* "SAT_solver.pyx":57
+    /* "SAT_solver.pyx":60
  *     for a in sez:
  *         mapVal = len(a)
  *         if mapVal > minVal:             # <<<<<<<<<<<<<<
@@ -2835,7 +2894,7 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
     __pyx_t_6 = ((__pyx_v_mapVal > __pyx_v_minVal) != 0);
     if (__pyx_t_6) {
 
-      /* "SAT_solver.pyx":58
+      /* "SAT_solver.pyx":61
  *         mapVal = len(a)
  *         if mapVal > minVal:
  *             continue             # <<<<<<<<<<<<<<
@@ -2844,7 +2903,7 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
  */
       goto __pyx_L3_continue;
 
-      /* "SAT_solver.pyx":57
+      /* "SAT_solver.pyx":60
  *     for a in sez:
  *         mapVal = len(a)
  *         if mapVal > minVal:             # <<<<<<<<<<<<<<
@@ -2853,7 +2912,7 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
  */
     }
 
-    /* "SAT_solver.pyx":59
+    /* "SAT_solver.pyx":62
  *         if mapVal > minVal:
  *             continue
  *         if mapVal < minVal:             # <<<<<<<<<<<<<<
@@ -2863,7 +2922,7 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
     __pyx_t_6 = ((__pyx_v_mapVal < __pyx_v_minVal) != 0);
     if (__pyx_t_6) {
 
-      /* "SAT_solver.pyx":60
+      /* "SAT_solver.pyx":63
  *             continue
  *         if mapVal < minVal:
  *             minVal = mapVal             # <<<<<<<<<<<<<<
@@ -2872,14 +2931,14 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
  */
       __pyx_v_minVal = __pyx_v_mapVal;
 
-      /* "SAT_solver.pyx":61
+      /* "SAT_solver.pyx":64
  *         if mapVal < minVal:
  *             minVal = mapVal
  *             minList = [a]             # <<<<<<<<<<<<<<
  *         else:  # mapVal == minVal
  *             minList.append(a)
  */
-      __pyx_t_4 = PyList_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
+      __pyx_t_4 = PyList_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 64, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_INCREF(__pyx_v_a);
       __Pyx_GIVEREF(__pyx_v_a);
@@ -2887,7 +2946,7 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
       __Pyx_DECREF_SET(__pyx_v_minList, ((PyObject*)__pyx_t_4));
       __pyx_t_4 = 0;
 
-      /* "SAT_solver.pyx":59
+      /* "SAT_solver.pyx":62
  *         if mapVal > minVal:
  *             continue
  *         if mapVal < minVal:             # <<<<<<<<<<<<<<
@@ -2897,7 +2956,7 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
       goto __pyx_L6;
     }
 
-    /* "SAT_solver.pyx":63
+    /* "SAT_solver.pyx":66
  *             minList = [a]
  *         else:  # mapVal == minVal
  *             minList.append(a)             # <<<<<<<<<<<<<<
@@ -2905,11 +2964,11 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
  * 
  */
     /*else*/ {
-      __pyx_t_7 = __Pyx_PyList_Append(__pyx_v_minList, __pyx_v_a); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 63, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyList_Append(__pyx_v_minList, __pyx_v_a); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 66, __pyx_L1_error)
     }
     __pyx_L6:;
 
-    /* "SAT_solver.pyx":55
+    /* "SAT_solver.pyx":58
  *     minVal = len(sez[-1])
  *     minList = []
  *     for a in sez:             # <<<<<<<<<<<<<<
@@ -2920,7 +2979,7 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":64
+  /* "SAT_solver.pyx":67
  *         else:  # mapVal == minVal
  *             minList.append(a)
  *     return minList, minVal             # <<<<<<<<<<<<<<
@@ -2928,9 +2987,9 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_minVal); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_minVal); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(__pyx_v_minList);
   __Pyx_GIVEREF(__pyx_v_minList);
@@ -2942,7 +3001,7 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "SAT_solver.pyx":52
+  /* "SAT_solver.pyx":55
  * 
  * 
  * def minimal(sez):             # <<<<<<<<<<<<<<
@@ -2964,7 +3023,7 @@ static PyObject *__pyx_pf_10SAT_solver_8minimal(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "SAT_solver.pyx":67
+/* "SAT_solver.pyx":70
  * 
  * 
  * def keywithmaxval1(d):             # <<<<<<<<<<<<<<
@@ -2998,14 +3057,14 @@ static PyObject *__pyx_pf_10SAT_solver_10keywithmaxval1(CYTHON_UNUSED PyObject *
   PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("keywithmaxval1", 0);
 
-  /* "SAT_solver.pyx":68
+  /* "SAT_solver.pyx":71
  * 
  * def keywithmaxval1(d):
  *     v = list(d.values())             # <<<<<<<<<<<<<<
  *     k = list(d.keys())
  *     return k[v.index(max(v))]
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_d, __pyx_n_s_values); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_d, __pyx_n_s_values); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -3018,27 +3077,27 @@ static PyObject *__pyx_pf_10SAT_solver_10keywithmaxval1(CYTHON_UNUSED PyObject *
     }
   }
   if (__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PySequence_List(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_2 = PySequence_List(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_v = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "SAT_solver.pyx":69
+  /* "SAT_solver.pyx":72
  * def keywithmaxval1(d):
  *     v = list(d.values())
  *     k = list(d.keys())             # <<<<<<<<<<<<<<
  *     return k[v.index(max(v))]
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_d, __pyx_n_s_keys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_d, __pyx_n_s_keys); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
@@ -3051,20 +3110,20 @@ static PyObject *__pyx_pf_10SAT_solver_10keywithmaxval1(CYTHON_UNUSED PyObject *
     }
   }
   if (__pyx_t_3) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
-    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 72, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PySequence_List(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __pyx_t_1 = PySequence_List(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_k = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":70
+  /* "SAT_solver.pyx":73
  *     v = list(d.values())
  *     k = list(d.keys())
  *     return k[v.index(max(v))]             # <<<<<<<<<<<<<<
@@ -3072,14 +3131,14 @@ static PyObject *__pyx_pf_10SAT_solver_10keywithmaxval1(CYTHON_UNUSED PyObject *
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_v, __pyx_n_s_index); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 70, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_v, __pyx_n_s_index); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 70, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_v_v);
   __Pyx_GIVEREF(__pyx_v_v);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_v);
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_max, __pyx_t_3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 70, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_max, __pyx_t_3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -3093,14 +3152,14 @@ static PyObject *__pyx_pf_10SAT_solver_10keywithmaxval1(CYTHON_UNUSED PyObject *
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_t_4};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -3109,33 +3168,33 @@ static PyObject *__pyx_pf_10SAT_solver_10keywithmaxval1(CYTHON_UNUSED PyObject *
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_t_4};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     } else
     #endif
     {
-      __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 70, __pyx_L1_error)
+      __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 73, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
       __Pyx_GIVEREF(__pyx_t_4);
       PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_4);
       __pyx_t_4 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     }
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyObject_GetItem(__pyx_v_k, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 70, __pyx_L1_error)
+  __pyx_t_2 = PyObject_GetItem(__pyx_v_k, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "SAT_solver.pyx":67
+  /* "SAT_solver.pyx":70
  * 
  * 
  * def keywithmaxval1(d):             # <<<<<<<<<<<<<<
@@ -3160,7 +3219,7 @@ static PyObject *__pyx_pf_10SAT_solver_10keywithmaxval1(CYTHON_UNUSED PyObject *
   return __pyx_r;
 }
 
-/* "SAT_solver.pyx":73
+/* "SAT_solver.pyx":76
  * 
  * 
  * def keywithmaxval(d):             # <<<<<<<<<<<<<<
@@ -3192,7 +3251,7 @@ static PyObject *__pyx_pf_10SAT_solver_12keywithmaxval(CYTHON_UNUSED PyObject *_
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("keywithmaxval", 0);
 
-  /* "SAT_solver.pyx":76
+  /* "SAT_solver.pyx":79
  *     """ a) create a list of the dict's keys and values;
  *         b) return the key with the max value"""
  *     return max(d.items(), key=operator.itemgetter(1))[0]             # <<<<<<<<<<<<<<
@@ -3200,7 +3259,7 @@ static PyObject *__pyx_pf_10SAT_solver_12keywithmaxval(CYTHON_UNUSED PyObject *_
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_d, __pyx_n_s_items); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_d, __pyx_n_s_items); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -3213,42 +3272,42 @@ static PyObject *__pyx_pf_10SAT_solver_12keywithmaxval(CYTHON_UNUSED PyObject *_
     }
   }
   if (__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_operator); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_operator); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_itemgetter); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_itemgetter); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_key, __pyx_t_3) < 0) __PYX_ERR(0, 76, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_key, __pyx_t_3) < 0) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_max, __pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_max, __pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "SAT_solver.pyx":73
+  /* "SAT_solver.pyx":76
  * 
  * 
  * def keywithmaxval(d):             # <<<<<<<<<<<<<<
@@ -3270,7 +3329,7 @@ static PyObject *__pyx_pf_10SAT_solver_12keywithmaxval(CYTHON_UNUSED PyObject *_
   return __pyx_r;
 }
 
-/* "SAT_solver.pyx":79
+/* "SAT_solver.pyx":82
  * 
  * 
  * def najpojavitve(formula):             # <<<<<<<<<<<<<<
@@ -3309,19 +3368,19 @@ static PyObject *__pyx_pf_10SAT_solver_14najpojavitve(CYTHON_UNUSED PyObject *__
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("najpojavitve", 0);
 
-  /* "SAT_solver.pyx":80
+  /* "SAT_solver.pyx":83
  * 
  * def najpojavitve(formula):
  *     pon = {}             # <<<<<<<<<<<<<<
  *     for clause in formula:
  *         for var in clause:
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_pon = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":81
+  /* "SAT_solver.pyx":84
  * def najpojavitve(formula):
  *     pon = {}
  *     for clause in formula:             # <<<<<<<<<<<<<<
@@ -3332,26 +3391,26 @@ static PyObject *__pyx_pf_10SAT_solver_14najpojavitve(CYTHON_UNUSED PyObject *__
     __pyx_t_1 = __pyx_v_formula; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_formula); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_formula); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 84, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 81, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 84, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 81, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 84, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 81, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 84, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 81, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 84, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -3361,7 +3420,7 @@ static PyObject *__pyx_pf_10SAT_solver_14najpojavitve(CYTHON_UNUSED PyObject *__
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 81, __pyx_L1_error)
+          else __PYX_ERR(0, 84, __pyx_L1_error)
         }
         break;
       }
@@ -3370,7 +3429,7 @@ static PyObject *__pyx_pf_10SAT_solver_14najpojavitve(CYTHON_UNUSED PyObject *__
     __Pyx_XDECREF_SET(__pyx_v_clause, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "SAT_solver.pyx":82
+    /* "SAT_solver.pyx":85
  *     pon = {}
  *     for clause in formula:
  *         for var in clause:             # <<<<<<<<<<<<<<
@@ -3381,26 +3440,26 @@ static PyObject *__pyx_pf_10SAT_solver_14najpojavitve(CYTHON_UNUSED PyObject *__
       __pyx_t_4 = __pyx_v_clause; __Pyx_INCREF(__pyx_t_4); __pyx_t_5 = 0;
       __pyx_t_6 = NULL;
     } else {
-      __pyx_t_5 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_clause); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 82, __pyx_L1_error)
+      __pyx_t_5 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_clause); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 85, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_6 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 82, __pyx_L1_error)
+      __pyx_t_6 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 85, __pyx_L1_error)
     }
     for (;;) {
       if (likely(!__pyx_t_6)) {
         if (likely(PyList_CheckExact(__pyx_t_4))) {
           if (__pyx_t_5 >= PyList_GET_SIZE(__pyx_t_4)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_7 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_5); __Pyx_INCREF(__pyx_t_7); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 82, __pyx_L1_error)
+          __pyx_t_7 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_5); __Pyx_INCREF(__pyx_t_7); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 85, __pyx_L1_error)
           #else
-          __pyx_t_7 = PySequence_ITEM(__pyx_t_4, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 82, __pyx_L1_error)
+          __pyx_t_7 = PySequence_ITEM(__pyx_t_4, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 85, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_7);
           #endif
         } else {
           if (__pyx_t_5 >= PyTuple_GET_SIZE(__pyx_t_4)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_7 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_5); __Pyx_INCREF(__pyx_t_7); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 82, __pyx_L1_error)
+          __pyx_t_7 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_5); __Pyx_INCREF(__pyx_t_7); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 85, __pyx_L1_error)
           #else
-          __pyx_t_7 = PySequence_ITEM(__pyx_t_4, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 82, __pyx_L1_error)
+          __pyx_t_7 = PySequence_ITEM(__pyx_t_4, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 85, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_7);
           #endif
         }
@@ -3410,7 +3469,7 @@ static PyObject *__pyx_pf_10SAT_solver_14najpojavitve(CYTHON_UNUSED PyObject *__
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 82, __pyx_L1_error)
+            else __PYX_ERR(0, 85, __pyx_L1_error)
           }
           break;
         }
@@ -3419,28 +3478,28 @@ static PyObject *__pyx_pf_10SAT_solver_14najpojavitve(CYTHON_UNUSED PyObject *__
       __Pyx_XDECREF_SET(__pyx_v_var, __pyx_t_7);
       __pyx_t_7 = 0;
 
-      /* "SAT_solver.pyx":83
+      /* "SAT_solver.pyx":86
  *     for clause in formula:
  *         for var in clause:
  *             pon[abs(var)] = pon.get(abs(var), 0) + 1             # <<<<<<<<<<<<<<
  * 
  *     k = keywithmaxval(pon)
  */
-      __pyx_t_7 = PyNumber_Absolute(__pyx_v_var); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 83, __pyx_L1_error)
+      __pyx_t_7 = PyNumber_Absolute(__pyx_v_var); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 86, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_8 = __Pyx_PyDict_GetItemDefault(__pyx_v_pon, __pyx_t_7, __pyx_int_0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 83, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyDict_GetItemDefault(__pyx_v_pon, __pyx_t_7, __pyx_int_0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 86, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = __Pyx_PyInt_AddObjC(__pyx_t_8, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 83, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyInt_AddObjC(__pyx_t_8, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 86, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_8 = PyNumber_Absolute(__pyx_v_var); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 83, __pyx_L1_error)
+      __pyx_t_8 = PyNumber_Absolute(__pyx_v_var); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 86, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
-      if (unlikely(PyDict_SetItem(__pyx_v_pon, __pyx_t_8, __pyx_t_7) < 0)) __PYX_ERR(0, 83, __pyx_L1_error)
+      if (unlikely(PyDict_SetItem(__pyx_v_pon, __pyx_t_8, __pyx_t_7) < 0)) __PYX_ERR(0, 86, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-      /* "SAT_solver.pyx":82
+      /* "SAT_solver.pyx":85
  *     pon = {}
  *     for clause in formula:
  *         for var in clause:             # <<<<<<<<<<<<<<
@@ -3450,7 +3509,7 @@ static PyObject *__pyx_pf_10SAT_solver_14najpojavitve(CYTHON_UNUSED PyObject *__
     }
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "SAT_solver.pyx":81
+    /* "SAT_solver.pyx":84
  * def najpojavitve(formula):
  *     pon = {}
  *     for clause in formula:             # <<<<<<<<<<<<<<
@@ -3460,14 +3519,14 @@ static PyObject *__pyx_pf_10SAT_solver_14najpojavitve(CYTHON_UNUSED PyObject *__
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":85
+  /* "SAT_solver.pyx":88
  *             pon[abs(var)] = pon.get(abs(var), 0) + 1
  * 
  *     k = keywithmaxval(pon)             # <<<<<<<<<<<<<<
  *     return k
  * 
  */
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_keywithmaxval); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 85, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_keywithmaxval); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_7 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
@@ -3480,13 +3539,13 @@ static PyObject *__pyx_pf_10SAT_solver_14najpojavitve(CYTHON_UNUSED PyObject *__
     }
   }
   if (!__pyx_t_7) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_pon); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_pon); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_v_pon};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -3494,19 +3553,19 @@ static PyObject *__pyx_pf_10SAT_solver_14najpojavitve(CYTHON_UNUSED PyObject *__
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_v_pon};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 85, __pyx_L1_error)
+      __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 88, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_7); __pyx_t_7 = NULL;
       __Pyx_INCREF(__pyx_v_pon);
       __Pyx_GIVEREF(__pyx_v_pon);
       PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_v_pon);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     }
@@ -3515,7 +3574,7 @@ static PyObject *__pyx_pf_10SAT_solver_14najpojavitve(CYTHON_UNUSED PyObject *__
   __pyx_v_k = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":86
+  /* "SAT_solver.pyx":89
  * 
  *     k = keywithmaxval(pon)
  *     return k             # <<<<<<<<<<<<<<
@@ -3527,7 +3586,7 @@ static PyObject *__pyx_pf_10SAT_solver_14najpojavitve(CYTHON_UNUSED PyObject *__
   __pyx_r = __pyx_v_k;
   goto __pyx_L0;
 
-  /* "SAT_solver.pyx":79
+  /* "SAT_solver.pyx":82
  * 
  * 
  * def najpojavitve(formula):             # <<<<<<<<<<<<<<
@@ -3553,7 +3612,7 @@ static PyObject *__pyx_pf_10SAT_solver_14najpojavitve(CYTHON_UNUSED PyObject *__
   return __pyx_r;
 }
 
-/* "SAT_solver.pyx":90
+/* "SAT_solver.pyx":93
  * 
  * # tudi unit caluse iemo enega  po enega
  * def findvar(formula):             # <<<<<<<<<<<<<<
@@ -3589,25 +3648,25 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
   PyObject *(*__pyx_t_7)(PyObject *);
   __Pyx_RefNannySetupContext("findvar", 0);
 
-  /* "SAT_solver.pyx":91
+  /* "SAT_solver.pyx":94
  * # tudi unit caluse iemo enega  po enega
  * def findvar(formula):
  *     if len(formula) > 0:             # <<<<<<<<<<<<<<
  *         minclauses, minlen = minimal(formula)
  *         # e je formula protislovje
  */
-  __pyx_t_1 = PyObject_Length(__pyx_v_formula); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(__pyx_v_formula); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 94, __pyx_L1_error)
   __pyx_t_2 = ((__pyx_t_1 > 0) != 0);
   if (__pyx_t_2) {
 
-    /* "SAT_solver.pyx":92
+    /* "SAT_solver.pyx":95
  * def findvar(formula):
  *     if len(formula) > 0:
  *         minclauses, minlen = minimal(formula)             # <<<<<<<<<<<<<<
  *         # e je formula protislovje
  *         if minlen == 0:
  */
-    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_minimal); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 92, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_minimal); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 95, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
@@ -3620,13 +3679,13 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
       }
     }
     if (!__pyx_t_5) {
-      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_formula); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 92, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_formula); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 95, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_4)) {
         PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_formula};
-        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 92, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 95, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_GOTREF(__pyx_t_3);
       } else
@@ -3634,19 +3693,19 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
         PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_formula};
-        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 92, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 95, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_GOTREF(__pyx_t_3);
       } else
       #endif
       {
-        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 92, __pyx_L1_error)
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 95, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
         __Pyx_INCREF(__pyx_v_formula);
         __Pyx_GIVEREF(__pyx_v_formula);
         PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_v_formula);
-        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 92, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 95, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
@@ -3662,7 +3721,7 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
       if (unlikely(size != 2)) {
         if (size > 2) __Pyx_RaiseTooManyValuesError(2);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 92, __pyx_L1_error)
+        __PYX_ERR(0, 95, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -3675,15 +3734,15 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
       __Pyx_INCREF(__pyx_t_4);
       __Pyx_INCREF(__pyx_t_6);
       #else
-      __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 92, __pyx_L1_error)
+      __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 95, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_6 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 92, __pyx_L1_error)
+      __pyx_t_6 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 95, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       #endif
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_5 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 92, __pyx_L1_error)
+      __pyx_t_5 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 95, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_7 = Py_TYPE(__pyx_t_5)->tp_iternext;
@@ -3691,7 +3750,7 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
       __Pyx_GOTREF(__pyx_t_4);
       index = 1; __pyx_t_6 = __pyx_t_7(__pyx_t_5); if (unlikely(!__pyx_t_6)) goto __pyx_L4_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_6);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_7(__pyx_t_5), 2) < 0) __PYX_ERR(0, 92, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_7(__pyx_t_5), 2) < 0) __PYX_ERR(0, 95, __pyx_L1_error)
       __pyx_t_7 = NULL;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       goto __pyx_L5_unpacking_done;
@@ -3699,7 +3758,7 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_t_7 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 92, __pyx_L1_error)
+      __PYX_ERR(0, 95, __pyx_L1_error)
       __pyx_L5_unpacking_done:;
     }
     __pyx_v_minclauses = __pyx_t_4;
@@ -3707,20 +3766,20 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
     __pyx_v_minlen = __pyx_t_6;
     __pyx_t_6 = 0;
 
-    /* "SAT_solver.pyx":94
+    /* "SAT_solver.pyx":97
  *         minclauses, minlen = minimal(formula)
  *         # e je formula protislovje
  *         if minlen == 0:             # <<<<<<<<<<<<<<
  *             return "cont", None
  *         # e obstaja unit clause
  */
-    __pyx_t_3 = __Pyx_PyInt_EqObjC(__pyx_v_minlen, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 94, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_EqObjC(__pyx_v_minlen, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 97, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 94, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 97, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (__pyx_t_2) {
 
-      /* "SAT_solver.pyx":95
+      /* "SAT_solver.pyx":98
  *         # e je formula protislovje
  *         if minlen == 0:
  *             return "cont", None             # <<<<<<<<<<<<<<
@@ -3732,7 +3791,7 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
       __pyx_r = __pyx_tuple__5;
       goto __pyx_L0;
 
-      /* "SAT_solver.pyx":94
+      /* "SAT_solver.pyx":97
  *         minclauses, minlen = minimal(formula)
  *         # e je formula protislovje
  *         if minlen == 0:             # <<<<<<<<<<<<<<
@@ -3741,20 +3800,20 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
  */
     }
 
-    /* "SAT_solver.pyx":97
+    /* "SAT_solver.pyx":100
  *             return "cont", None
  *         # e obstaja unit clause
  *         elif minlen == 1:             # <<<<<<<<<<<<<<
  *             return True, (minclauses[0])[0]
  *         # e unit clausa ni
  */
-    __pyx_t_3 = __Pyx_PyInt_EqObjC(__pyx_v_minlen, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 97, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_EqObjC(__pyx_v_minlen, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 100, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 97, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 100, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (__pyx_t_2) {
 
-      /* "SAT_solver.pyx":98
+      /* "SAT_solver.pyx":101
  *         # e obstaja unit clause
  *         elif minlen == 1:
  *             return True, (minclauses[0])[0]             # <<<<<<<<<<<<<<
@@ -3762,12 +3821,12 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
  *         else:
  */
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_minclauses, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 98, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_minclauses, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_6 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 98, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 101, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 98, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_INCREF(Py_True);
       __Pyx_GIVEREF(Py_True);
@@ -3779,7 +3838,7 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
       __pyx_t_3 = 0;
       goto __pyx_L0;
 
-      /* "SAT_solver.pyx":97
+      /* "SAT_solver.pyx":100
  *             return "cont", None
  *         # e obstaja unit clause
  *         elif minlen == 1:             # <<<<<<<<<<<<<<
@@ -3788,7 +3847,7 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
  */
     }
 
-    /* "SAT_solver.pyx":101
+    /* "SAT_solver.pyx":104
  *         # e unit clausa ni
  *         else:
  *             return False, najpojavitve(minclauses)             # <<<<<<<<<<<<<<
@@ -3797,7 +3856,7 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
  */
     /*else*/ {
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_najpojavitve); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 101, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_najpojavitve); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 104, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __pyx_t_4 = NULL;
       if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
@@ -3810,13 +3869,13 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
         }
       }
       if (!__pyx_t_4) {
-        __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_minclauses); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_minclauses); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
       } else {
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_6)) {
           PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_minclauses};
-          __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
           __Pyx_GOTREF(__pyx_t_3);
         } else
@@ -3824,25 +3883,25 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
           PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_minclauses};
-          __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
           __Pyx_GOTREF(__pyx_t_3);
         } else
         #endif
         {
-          __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 101, __pyx_L1_error)
+          __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_5);
           __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __pyx_t_4 = NULL;
           __Pyx_INCREF(__pyx_v_minclauses);
           __Pyx_GIVEREF(__pyx_v_minclauses);
           PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_v_minclauses);
-          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_5, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_5, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
         }
       }
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 101, __pyx_L1_error)
+      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 104, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_INCREF(Py_False);
       __Pyx_GIVEREF(Py_False);
@@ -3855,7 +3914,7 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
       goto __pyx_L0;
     }
 
-    /* "SAT_solver.pyx":91
+    /* "SAT_solver.pyx":94
  * # tudi unit caluse iemo enega  po enega
  * def findvar(formula):
  *     if len(formula) > 0:             # <<<<<<<<<<<<<<
@@ -3864,7 +3923,7 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
  */
   }
 
-  /* "SAT_solver.pyx":104
+  /* "SAT_solver.pyx":107
  *     # e je formula tavtologija
  *     else:
  *         return "tavt", None             # <<<<<<<<<<<<<<
@@ -3878,7 +3937,7 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
     goto __pyx_L0;
   }
 
-  /* "SAT_solver.pyx":90
+  /* "SAT_solver.pyx":93
  * 
  * # tudi unit caluse iemo enega  po enega
  * def findvar(formula):             # <<<<<<<<<<<<<<
@@ -3903,7 +3962,7 @@ static PyObject *__pyx_pf_10SAT_solver_16findvar(CYTHON_UNUSED PyObject *__pyx_s
 }
 static PyObject *__pyx_gb_10SAT_solver_20generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
 
-/* "SAT_solver.pyx":107
+/* "SAT_solver.pyx":110
  * 
  * 
  * def flatten(l, ltypes=collections.Sequence):             # <<<<<<<<<<<<<<
@@ -3948,7 +4007,7 @@ static PyObject *__pyx_pw_10SAT_solver_19flatten(PyObject *__pyx_self, PyObject 
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "flatten") < 0)) __PYX_ERR(0, 107, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "flatten") < 0)) __PYX_ERR(0, 110, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -3964,7 +4023,7 @@ static PyObject *__pyx_pw_10SAT_solver_19flatten(PyObject *__pyx_self, PyObject 
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("flatten", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 107, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("flatten", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 110, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("SAT_solver.flatten", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3986,7 +4045,7 @@ static PyObject *__pyx_pf_10SAT_solver_18flatten(CYTHON_UNUSED PyObject *__pyx_s
   if (unlikely(!__pyx_cur_scope)) {
     __pyx_cur_scope = ((struct __pyx_obj_10SAT_solver___pyx_scope_struct__flatten *)Py_None);
     __Pyx_INCREF(Py_None);
-    __PYX_ERR(0, 107, __pyx_L1_error)
+    __PYX_ERR(0, 110, __pyx_L1_error)
   } else {
     __Pyx_GOTREF(__pyx_cur_scope);
   }
@@ -3997,7 +4056,7 @@ static PyObject *__pyx_pf_10SAT_solver_18flatten(CYTHON_UNUSED PyObject *__pyx_s
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_ltypes);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_ltypes);
   {
-    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_10SAT_solver_20generator, (PyObject *) __pyx_cur_scope, __pyx_n_s_flatten, __pyx_n_s_flatten, __pyx_n_s_SAT_solver); if (unlikely(!gen)) __PYX_ERR(0, 107, __pyx_L1_error)
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_10SAT_solver_20generator, (PyObject *) __pyx_cur_scope, __pyx_n_s_flatten, __pyx_n_s_flatten, __pyx_n_s_SAT_solver); if (unlikely(!gen)) __PYX_ERR(0, 110, __pyx_L1_error)
     __Pyx_DECREF(__pyx_cur_scope);
     __Pyx_RefNannyFinishContext();
     return (PyObject *) gen;
@@ -4031,23 +4090,23 @@ static PyObject *__pyx_gb_10SAT_solver_20generator(__pyx_CoroutineObject *__pyx_
     return NULL;
   }
   __pyx_L3_first_run:;
-  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 107, __pyx_L1_error)
+  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 110, __pyx_L1_error)
 
-  /* "SAT_solver.pyx":108
+  /* "SAT_solver.pyx":111
  * 
  * def flatten(l, ltypes=collections.Sequence):
  *     l = list(l)             # <<<<<<<<<<<<<<
  *     while l:
  *         while l and isinstance(l[0], ltypes):
  */
-  __pyx_t_1 = PySequence_List(__pyx_cur_scope->__pyx_v_l); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 108, __pyx_L1_error)
+  __pyx_t_1 = PySequence_List(__pyx_cur_scope->__pyx_v_l); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_l);
   __Pyx_DECREF_SET(__pyx_cur_scope->__pyx_v_l, __pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":109
+  /* "SAT_solver.pyx":112
  * def flatten(l, ltypes=collections.Sequence):
  *     l = list(l)
  *     while l:             # <<<<<<<<<<<<<<
@@ -4055,10 +4114,10 @@ static PyObject *__pyx_gb_10SAT_solver_20generator(__pyx_CoroutineObject *__pyx_
  *             l[0:1] = l[0]
  */
   while (1) {
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_l); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 109, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_l); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 112, __pyx_L1_error)
     if (!__pyx_t_2) break;
 
-    /* "SAT_solver.pyx":110
+    /* "SAT_solver.pyx":113
  *     l = list(l)
  *     while l:
  *         while l and isinstance(l[0], ltypes):             # <<<<<<<<<<<<<<
@@ -4066,44 +4125,44 @@ static PyObject *__pyx_gb_10SAT_solver_20generator(__pyx_CoroutineObject *__pyx_
  *         if l: yield l.pop(0)
  */
     while (1) {
-      __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_l); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 110, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_l); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 113, __pyx_L1_error)
       if (__pyx_t_3) {
       } else {
         __pyx_t_2 = __pyx_t_3;
         goto __pyx_L8_bool_binop_done;
       }
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_cur_scope->__pyx_v_l, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 110, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_GetItemInt(__pyx_cur_scope->__pyx_v_l, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 113, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = PyObject_IsInstance(__pyx_t_1, __pyx_cur_scope->__pyx_v_ltypes); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 110, __pyx_L1_error)
+      __pyx_t_3 = PyObject_IsInstance(__pyx_t_1, __pyx_cur_scope->__pyx_v_ltypes); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 113, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_t_4 = (__pyx_t_3 != 0);
       __pyx_t_2 = __pyx_t_4;
       __pyx_L8_bool_binop_done:;
       if (!__pyx_t_2) break;
 
-      /* "SAT_solver.pyx":111
+      /* "SAT_solver.pyx":114
  *     while l:
  *         while l and isinstance(l[0], ltypes):
  *             l[0:1] = l[0]             # <<<<<<<<<<<<<<
  *         if l: yield l.pop(0)
  * 
  */
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_cur_scope->__pyx_v_l, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_GetItemInt(__pyx_cur_scope->__pyx_v_l, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 114, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      if (__Pyx_PyObject_SetSlice(__pyx_cur_scope->__pyx_v_l, __pyx_t_1, 0, 1, NULL, NULL, &__pyx_slice__8, 1, 1, 1) < 0) __PYX_ERR(0, 111, __pyx_L1_error)
+      if (__Pyx_PyObject_SetSlice(__pyx_cur_scope->__pyx_v_l, __pyx_t_1, 0, 1, NULL, NULL, &__pyx_slice__8, 1, 1, 1) < 0) __PYX_ERR(0, 114, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     }
 
-    /* "SAT_solver.pyx":112
+    /* "SAT_solver.pyx":115
  *         while l and isinstance(l[0], ltypes):
  *             l[0:1] = l[0]
  *         if l: yield l.pop(0)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_l); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 112, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_cur_scope->__pyx_v_l); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 115, __pyx_L1_error)
     if (__pyx_t_2) {
-      __pyx_t_1 = __Pyx_PyObject_PopIndex(__pyx_cur_scope->__pyx_v_l, __pyx_int_0, 0, 1, Py_ssize_t, PyInt_FromSsize_t); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_PopIndex(__pyx_cur_scope->__pyx_v_l, __pyx_int_0, 0, 1, Py_ssize_t, PyInt_FromSsize_t); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 115, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_r = __pyx_t_1;
       __pyx_t_1 = 0;
@@ -4114,12 +4173,12 @@ static PyObject *__pyx_gb_10SAT_solver_20generator(__pyx_CoroutineObject *__pyx_
       __pyx_generator->resume_label = 1;
       return __pyx_r;
       __pyx_L11_resume_from_yield:;
-      if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 112, __pyx_L1_error)
+      if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 115, __pyx_L1_error)
     }
   }
   CYTHON_MAYBE_UNUSED_VAR(__pyx_cur_scope);
 
-  /* "SAT_solver.pyx":107
+  /* "SAT_solver.pyx":110
  * 
  * 
  * def flatten(l, ltypes=collections.Sequence):             # <<<<<<<<<<<<<<
@@ -4142,7 +4201,7 @@ static PyObject *__pyx_gb_10SAT_solver_20generator(__pyx_CoroutineObject *__pyx_
   return __pyx_r;
 }
 
-/* "SAT_solver.pyx":115
+/* "SAT_solver.pyx":118
  * 
  * 
  * def DPLL(form):             # <<<<<<<<<<<<<<
@@ -4191,14 +4250,14 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
   PyObject *__pyx_t_11 = NULL;
   __Pyx_RefNannySetupContext("DPLL", 0);
 
-  /* "SAT_solver.pyx":116
+  /* "SAT_solver.pyx":119
  * 
  * def DPLL(form):
  *     formula = copy2dList(form)             # <<<<<<<<<<<<<<
  *     sat = None
  *     val = []
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_copy2dList); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_copy2dList); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
@@ -4211,13 +4270,13 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_form); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 116, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_form); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 119, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_form};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 116, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 119, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -4225,19 +4284,19 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_form};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 116, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 119, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 116, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 119, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
       __Pyx_INCREF(__pyx_v_form);
       __Pyx_GIVEREF(__pyx_v_form);
       PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v_form);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 116, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 119, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
@@ -4246,7 +4305,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
   __pyx_v_formula = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":117
+  /* "SAT_solver.pyx":120
  * def DPLL(form):
  *     formula = copy2dList(form)
  *     sat = None             # <<<<<<<<<<<<<<
@@ -4256,55 +4315,55 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
   __Pyx_INCREF(Py_None);
   __pyx_v_sat = Py_None;
 
-  /* "SAT_solver.pyx":118
+  /* "SAT_solver.pyx":121
  *     formula = copy2dList(form)
  *     sat = None
  *     val = []             # <<<<<<<<<<<<<<
  *     guessformula = []
  *     guessformulas = []
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 121, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_val = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":119
+  /* "SAT_solver.pyx":122
  *     sat = None
  *     val = []
  *     guessformula = []             # <<<<<<<<<<<<<<
  *     guessformulas = []
  *     guessval = []
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 119, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_guessformula = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":120
+  /* "SAT_solver.pyx":123
  *     val = []
  *     guessformula = []
  *     guessformulas = []             # <<<<<<<<<<<<<<
  *     guessval = []
  *     guesses = 0
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_guessformulas = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":121
+  /* "SAT_solver.pyx":124
  *     guessformula = []
  *     guessformulas = []
  *     guessval = []             # <<<<<<<<<<<<<<
  *     guesses = 0
  *     while sat is None:
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 121, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_guessval = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":122
+  /* "SAT_solver.pyx":125
  *     guessformulas = []
  *     guessval = []
  *     guesses = 0             # <<<<<<<<<<<<<<
@@ -4314,7 +4373,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
   __Pyx_INCREF(__pyx_int_0);
   __pyx_v_guesses = __pyx_int_0;
 
-  /* "SAT_solver.pyx":123
+  /* "SAT_solver.pyx":126
  *     guessval = []
  *     guesses = 0
  *     while sat is None:             # <<<<<<<<<<<<<<
@@ -4326,25 +4385,25 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
     __pyx_t_6 = (__pyx_t_5 != 0);
     if (!__pyx_t_6) break;
 
-    /* "SAT_solver.pyx":125
+    /* "SAT_solver.pyx":128
  *     while sat is None:
  *         # zagotovo reevanje
  *         if len(guessval) == 0:             # <<<<<<<<<<<<<<
  *             unit, var = findvar(formula)
  *             # najdemo vse unit clause
  */
-    __pyx_t_7 = PyObject_Length(__pyx_v_guessval); if (unlikely(__pyx_t_7 == ((Py_ssize_t)-1))) __PYX_ERR(0, 125, __pyx_L1_error)
+    __pyx_t_7 = PyObject_Length(__pyx_v_guessval); if (unlikely(__pyx_t_7 == ((Py_ssize_t)-1))) __PYX_ERR(0, 128, __pyx_L1_error)
     __pyx_t_6 = ((__pyx_t_7 == 0) != 0);
     if (__pyx_t_6) {
 
-      /* "SAT_solver.pyx":126
+      /* "SAT_solver.pyx":129
  *         # zagotovo reevanje
  *         if len(guessval) == 0:
  *             unit, var = findvar(formula)             # <<<<<<<<<<<<<<
  *             # najdemo vse unit clause
  *             while unit is True:
  */
-      __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_findvar); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 126, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_findvar); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 129, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_t_4 = NULL;
       if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
@@ -4357,13 +4416,13 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         }
       }
       if (!__pyx_t_4) {
-        __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_formula); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_formula); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 129, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
       } else {
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_2)) {
           PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_formula};
-          __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 129, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
           __Pyx_GOTREF(__pyx_t_1);
         } else
@@ -4371,19 +4430,19 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
           PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_formula};
-          __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 129, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
           __Pyx_GOTREF(__pyx_t_1);
         } else
         #endif
         {
-          __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 126, __pyx_L1_error)
+          __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 129, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4); __pyx_t_4 = NULL;
           __Pyx_INCREF(__pyx_v_formula);
           __Pyx_GIVEREF(__pyx_v_formula);
           PyTuple_SET_ITEM(__pyx_t_3, 0+1, __pyx_v_formula);
-          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 129, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         }
@@ -4399,7 +4458,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         if (unlikely(size != 2)) {
           if (size > 2) __Pyx_RaiseTooManyValuesError(2);
           else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-          __PYX_ERR(0, 126, __pyx_L1_error)
+          __PYX_ERR(0, 129, __pyx_L1_error)
         }
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
         if (likely(PyTuple_CheckExact(sequence))) {
@@ -4412,15 +4471,15 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(__pyx_t_3);
         #else
-        __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 126, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 129, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 126, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 129, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       } else {
         Py_ssize_t index = -1;
-        __pyx_t_4 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 126, __pyx_L1_error)
+        __pyx_t_4 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 129, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __pyx_t_8 = Py_TYPE(__pyx_t_4)->tp_iternext;
@@ -4428,7 +4487,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_GOTREF(__pyx_t_2);
         index = 1; __pyx_t_3 = __pyx_t_8(__pyx_t_4); if (unlikely(!__pyx_t_3)) goto __pyx_L6_unpacking_failed;
         __Pyx_GOTREF(__pyx_t_3);
-        if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_4), 2) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
+        if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_4), 2) < 0) __PYX_ERR(0, 129, __pyx_L1_error)
         __pyx_t_8 = NULL;
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         goto __pyx_L7_unpacking_done;
@@ -4436,7 +4495,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __pyx_t_8 = NULL;
         if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-        __PYX_ERR(0, 126, __pyx_L1_error)
+        __PYX_ERR(0, 129, __pyx_L1_error)
         __pyx_L7_unpacking_done:;
       }
       __Pyx_XDECREF_SET(__pyx_v_unit, __pyx_t_2);
@@ -4444,7 +4503,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
       __Pyx_XDECREF_SET(__pyx_v_var, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "SAT_solver.pyx":128
+      /* "SAT_solver.pyx":131
  *             unit, var = findvar(formula)
  *             # najdemo vse unit clause
  *             while unit is True:             # <<<<<<<<<<<<<<
@@ -4456,14 +4515,14 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __pyx_t_5 = (__pyx_t_6 != 0);
         if (!__pyx_t_5) break;
 
-        /* "SAT_solver.pyx":129
+        /* "SAT_solver.pyx":132
  *             # najdemo vse unit clause
  *             while unit is True:
  *                 formula = simplifyunit(formula, var)             # <<<<<<<<<<<<<<
  *                 val.append(var)
  *                 unit, var = findvar(formula)
  */
-        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_simplifyunit); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 129, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_simplifyunit); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 132, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __pyx_t_2 = NULL;
         __pyx_t_9 = 0;
@@ -4480,7 +4539,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_formula, __pyx_v_var};
-          __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 129, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 132, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
           __Pyx_GOTREF(__pyx_t_1);
         } else
@@ -4488,13 +4547,13 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_formula, __pyx_v_var};
-          __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 129, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 132, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
           __Pyx_GOTREF(__pyx_t_1);
         } else
         #endif
         {
-          __pyx_t_4 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 129, __pyx_L1_error)
+          __pyx_t_4 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 132, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
           if (__pyx_t_2) {
             __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -4505,7 +4564,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           __Pyx_INCREF(__pyx_v_var);
           __Pyx_GIVEREF(__pyx_v_var);
           PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_9, __pyx_v_var);
-          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 129, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 132, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         }
@@ -4513,23 +4572,23 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_DECREF_SET(__pyx_v_formula, __pyx_t_1);
         __pyx_t_1 = 0;
 
-        /* "SAT_solver.pyx":130
+        /* "SAT_solver.pyx":133
  *             while unit is True:
  *                 formula = simplifyunit(formula, var)
  *                 val.append(var)             # <<<<<<<<<<<<<<
  *                 unit, var = findvar(formula)
  *             if unit == "tavt":
  */
-        __pyx_t_10 = __Pyx_PyList_Append(__pyx_v_val, __pyx_v_var); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 130, __pyx_L1_error)
+        __pyx_t_10 = __Pyx_PyList_Append(__pyx_v_val, __pyx_v_var); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 133, __pyx_L1_error)
 
-        /* "SAT_solver.pyx":131
+        /* "SAT_solver.pyx":134
  *                 formula = simplifyunit(formula, var)
  *                 val.append(var)
  *                 unit, var = findvar(formula)             # <<<<<<<<<<<<<<
  *             if unit == "tavt":
  *                 sat = True
  */
-        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_findvar); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 131, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_findvar); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 134, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __pyx_t_4 = NULL;
         if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -4542,13 +4601,13 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           }
         }
         if (!__pyx_t_4) {
-          __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_formula); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 131, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_formula); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 134, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
         } else {
           #if CYTHON_FAST_PYCALL
           if (PyFunction_Check(__pyx_t_3)) {
             PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_formula};
-            __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 131, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 134, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
             __Pyx_GOTREF(__pyx_t_1);
           } else
@@ -4556,19 +4615,19 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           #if CYTHON_FAST_PYCCALL
           if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
             PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_formula};
-            __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 131, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 134, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
             __Pyx_GOTREF(__pyx_t_1);
           } else
           #endif
           {
-            __pyx_t_2 = PyTuple_New(1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 131, __pyx_L1_error)
+            __pyx_t_2 = PyTuple_New(1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 134, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_4); __pyx_t_4 = NULL;
             __Pyx_INCREF(__pyx_v_formula);
             __Pyx_GIVEREF(__pyx_v_formula);
             PyTuple_SET_ITEM(__pyx_t_2, 0+1, __pyx_v_formula);
-            __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 131, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 134, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_1);
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
           }
@@ -4584,7 +4643,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           if (unlikely(size != 2)) {
             if (size > 2) __Pyx_RaiseTooManyValuesError(2);
             else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-            __PYX_ERR(0, 131, __pyx_L1_error)
+            __PYX_ERR(0, 134, __pyx_L1_error)
           }
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
           if (likely(PyTuple_CheckExact(sequence))) {
@@ -4597,15 +4656,15 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           __Pyx_INCREF(__pyx_t_3);
           __Pyx_INCREF(__pyx_t_2);
           #else
-          __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 131, __pyx_L1_error)
+          __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 134, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
-          __pyx_t_2 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 131, __pyx_L1_error)
+          __pyx_t_2 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 134, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           #endif
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         } else {
           Py_ssize_t index = -1;
-          __pyx_t_4 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 131, __pyx_L1_error)
+          __pyx_t_4 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 134, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           __pyx_t_8 = Py_TYPE(__pyx_t_4)->tp_iternext;
@@ -4613,7 +4672,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           __Pyx_GOTREF(__pyx_t_3);
           index = 1; __pyx_t_2 = __pyx_t_8(__pyx_t_4); if (unlikely(!__pyx_t_2)) goto __pyx_L10_unpacking_failed;
           __Pyx_GOTREF(__pyx_t_2);
-          if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_4), 2) < 0) __PYX_ERR(0, 131, __pyx_L1_error)
+          if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_4), 2) < 0) __PYX_ERR(0, 134, __pyx_L1_error)
           __pyx_t_8 = NULL;
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           goto __pyx_L11_unpacking_done;
@@ -4621,7 +4680,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           __pyx_t_8 = NULL;
           if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-          __PYX_ERR(0, 131, __pyx_L1_error)
+          __PYX_ERR(0, 134, __pyx_L1_error)
           __pyx_L11_unpacking_done:;
         }
         __Pyx_DECREF_SET(__pyx_v_unit, __pyx_t_3);
@@ -4630,17 +4689,17 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __pyx_t_2 = 0;
       }
 
-      /* "SAT_solver.pyx":132
+      /* "SAT_solver.pyx":135
  *                 val.append(var)
  *                 unit, var = findvar(formula)
  *             if unit == "tavt":             # <<<<<<<<<<<<<<
  *                 sat = True
  *                 out = val
  */
-      __pyx_t_5 = (__Pyx_PyString_Equals(__pyx_v_unit, __pyx_n_s_tavt, Py_EQ)); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 132, __pyx_L1_error)
+      __pyx_t_5 = (__Pyx_PyString_Equals(__pyx_v_unit, __pyx_n_s_tavt, Py_EQ)); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 135, __pyx_L1_error)
       if (__pyx_t_5) {
 
-        /* "SAT_solver.pyx":133
+        /* "SAT_solver.pyx":136
  *                 unit, var = findvar(formula)
  *             if unit == "tavt":
  *                 sat = True             # <<<<<<<<<<<<<<
@@ -4650,7 +4709,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_INCREF(Py_True);
         __Pyx_DECREF_SET(__pyx_v_sat, Py_True);
 
-        /* "SAT_solver.pyx":134
+        /* "SAT_solver.pyx":137
  *             if unit == "tavt":
  *                 sat = True
  *                 out = val             # <<<<<<<<<<<<<<
@@ -4660,7 +4719,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_INCREF(__pyx_v_val);
         __Pyx_XDECREF_SET(__pyx_v_out, __pyx_v_val);
 
-        /* "SAT_solver.pyx":132
+        /* "SAT_solver.pyx":135
  *                 val.append(var)
  *                 unit, var = findvar(formula)
  *             if unit == "tavt":             # <<<<<<<<<<<<<<
@@ -4670,17 +4729,17 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         goto __pyx_L12;
       }
 
-      /* "SAT_solver.pyx":135
+      /* "SAT_solver.pyx":138
  *                 sat = True
  *                 out = val
  *             elif unit == "cont":             # <<<<<<<<<<<<<<
  *                 sat = False
  *                 out = []
  */
-      __pyx_t_5 = (__Pyx_PyString_Equals(__pyx_v_unit, __pyx_n_s_cont, Py_EQ)); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 135, __pyx_L1_error)
+      __pyx_t_5 = (__Pyx_PyString_Equals(__pyx_v_unit, __pyx_n_s_cont, Py_EQ)); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 138, __pyx_L1_error)
       if (__pyx_t_5) {
 
-        /* "SAT_solver.pyx":136
+        /* "SAT_solver.pyx":139
  *                 out = val
  *             elif unit == "cont":
  *                 sat = False             # <<<<<<<<<<<<<<
@@ -4690,19 +4749,19 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_INCREF(Py_False);
         __Pyx_DECREF_SET(__pyx_v_sat, Py_False);
 
-        /* "SAT_solver.pyx":137
+        /* "SAT_solver.pyx":140
  *             elif unit == "cont":
  *                 sat = False
  *                 out = []             # <<<<<<<<<<<<<<
  * 
  *             # izberemo literal iz najkrajega clause in ga morda zamenjamo z negacijo
  */
-        __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 137, __pyx_L1_error)
+        __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 140, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_XDECREF_SET(__pyx_v_out, ((PyObject*)__pyx_t_1));
         __pyx_t_1 = 0;
 
-        /* "SAT_solver.pyx":135
+        /* "SAT_solver.pyx":138
  *                 sat = True
  *                 out = val
  *             elif unit == "cont":             # <<<<<<<<<<<<<<
@@ -4712,7 +4771,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         goto __pyx_L12;
       }
 
-      /* "SAT_solver.pyx":141
+      /* "SAT_solver.pyx":144
  *             # izberemo literal iz najkrajega clause in ga morda zamenjamo z negacijo
  *             else:
  *                 guessformula = simplifyunit(formula, var)             # <<<<<<<<<<<<<<
@@ -4720,7 +4779,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
  *                 guesses = 1
  */
       /*else*/ {
-        __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_simplifyunit); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 141, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_simplifyunit); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 144, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __pyx_t_3 = NULL;
         __pyx_t_9 = 0;
@@ -4737,7 +4796,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_2)) {
           PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_formula, __pyx_v_var};
-          __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 141, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 144, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
           __Pyx_GOTREF(__pyx_t_1);
         } else
@@ -4745,13 +4804,13 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
           PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_formula, __pyx_v_var};
-          __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 141, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 144, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
           __Pyx_GOTREF(__pyx_t_1);
         } else
         #endif
         {
-          __pyx_t_4 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 141, __pyx_L1_error)
+          __pyx_t_4 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 144, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
           if (__pyx_t_3) {
             __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -4762,7 +4821,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           __Pyx_INCREF(__pyx_v_var);
           __Pyx_GIVEREF(__pyx_v_var);
           PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_9, __pyx_v_var);
-          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 141, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 144, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         }
@@ -4770,14 +4829,14 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_DECREF_SET(__pyx_v_guessformula, __pyx_t_1);
         __pyx_t_1 = 0;
 
-        /* "SAT_solver.pyx":142
+        /* "SAT_solver.pyx":145
  *             else:
  *                 guessformula = simplifyunit(formula, var)
  *                 guessval = [val, var]             # <<<<<<<<<<<<<<
  *                 guesses = 1
  * 
  */
-        __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 142, __pyx_L1_error)
+        __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 145, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_INCREF(__pyx_v_val);
         __Pyx_GIVEREF(__pyx_v_val);
@@ -4788,7 +4847,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_DECREF_SET(__pyx_v_guessval, __pyx_t_1);
         __pyx_t_1 = 0;
 
-        /* "SAT_solver.pyx":143
+        /* "SAT_solver.pyx":146
  *                 guessformula = simplifyunit(formula, var)
  *                 guessval = [val, var]
  *                 guesses = 1             # <<<<<<<<<<<<<<
@@ -4800,7 +4859,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
       }
       __pyx_L12:;
 
-      /* "SAT_solver.pyx":125
+      /* "SAT_solver.pyx":128
  *     while sat is None:
  *         # zagotovo reevanje
  *         if len(guessval) == 0:             # <<<<<<<<<<<<<<
@@ -4810,7 +4869,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
       goto __pyx_L5;
     }
 
-    /* "SAT_solver.pyx":147
+    /* "SAT_solver.pyx":150
  *         # ugibanje
  *         else:
  *             unit, var = findvar(guessformula)             # <<<<<<<<<<<<<<
@@ -4818,7 +4877,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
  *                 guessformula = simplifyunit(guessformula, var)
  */
     /*else*/ {
-      __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_findvar); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 147, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_findvar); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 150, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_t_4 = NULL;
       if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
@@ -4831,13 +4890,13 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         }
       }
       if (!__pyx_t_4) {
-        __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_guessformula); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_guessformula); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 150, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
       } else {
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_2)) {
           PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_guessformula};
-          __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 150, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
           __Pyx_GOTREF(__pyx_t_1);
         } else
@@ -4845,19 +4904,19 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
           PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_guessformula};
-          __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 150, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
           __Pyx_GOTREF(__pyx_t_1);
         } else
         #endif
         {
-          __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 147, __pyx_L1_error)
+          __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 150, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4); __pyx_t_4 = NULL;
           __Pyx_INCREF(__pyx_v_guessformula);
           __Pyx_GIVEREF(__pyx_v_guessformula);
           PyTuple_SET_ITEM(__pyx_t_3, 0+1, __pyx_v_guessformula);
-          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 150, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         }
@@ -4873,7 +4932,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         if (unlikely(size != 2)) {
           if (size > 2) __Pyx_RaiseTooManyValuesError(2);
           else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-          __PYX_ERR(0, 147, __pyx_L1_error)
+          __PYX_ERR(0, 150, __pyx_L1_error)
         }
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
         if (likely(PyTuple_CheckExact(sequence))) {
@@ -4886,15 +4945,15 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(__pyx_t_3);
         #else
-        __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 147, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 150, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 147, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 150, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       } else {
         Py_ssize_t index = -1;
-        __pyx_t_4 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 147, __pyx_L1_error)
+        __pyx_t_4 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 150, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __pyx_t_8 = Py_TYPE(__pyx_t_4)->tp_iternext;
@@ -4902,7 +4961,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_GOTREF(__pyx_t_2);
         index = 1; __pyx_t_3 = __pyx_t_8(__pyx_t_4); if (unlikely(!__pyx_t_3)) goto __pyx_L13_unpacking_failed;
         __Pyx_GOTREF(__pyx_t_3);
-        if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_4), 2) < 0) __PYX_ERR(0, 147, __pyx_L1_error)
+        if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_4), 2) < 0) __PYX_ERR(0, 150, __pyx_L1_error)
         __pyx_t_8 = NULL;
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         goto __pyx_L14_unpacking_done;
@@ -4910,7 +4969,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __pyx_t_8 = NULL;
         if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-        __PYX_ERR(0, 147, __pyx_L1_error)
+        __PYX_ERR(0, 150, __pyx_L1_error)
         __pyx_L14_unpacking_done:;
       }
       __Pyx_XDECREF_SET(__pyx_v_unit, __pyx_t_2);
@@ -4918,7 +4977,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
       __Pyx_XDECREF_SET(__pyx_v_var, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "SAT_solver.pyx":148
+      /* "SAT_solver.pyx":151
  *         else:
  *             unit, var = findvar(guessformula)
  *             while unit is True:             # <<<<<<<<<<<<<<
@@ -4930,14 +4989,14 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __pyx_t_6 = (__pyx_t_5 != 0);
         if (!__pyx_t_6) break;
 
-        /* "SAT_solver.pyx":149
+        /* "SAT_solver.pyx":152
  *             unit, var = findvar(guessformula)
  *             while unit is True:
  *                 guessformula = simplifyunit(guessformula, var)             # <<<<<<<<<<<<<<
  *                 guessval.append(var)
  *                 unit, var = findvar(guessformula)
  */
-        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_simplifyunit); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 149, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_simplifyunit); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 152, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __pyx_t_2 = NULL;
         __pyx_t_9 = 0;
@@ -4954,7 +5013,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_guessformula, __pyx_v_var};
-          __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 149, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
           __Pyx_GOTREF(__pyx_t_1);
         } else
@@ -4962,13 +5021,13 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_guessformula, __pyx_v_var};
-          __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 149, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
           __Pyx_GOTREF(__pyx_t_1);
         } else
         #endif
         {
-          __pyx_t_4 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 149, __pyx_L1_error)
+          __pyx_t_4 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 152, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
           if (__pyx_t_2) {
             __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -4979,7 +5038,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           __Pyx_INCREF(__pyx_v_var);
           __Pyx_GIVEREF(__pyx_v_var);
           PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_9, __pyx_v_var);
-          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 149, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         }
@@ -4987,23 +5046,23 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_DECREF_SET(__pyx_v_guessformula, __pyx_t_1);
         __pyx_t_1 = 0;
 
-        /* "SAT_solver.pyx":150
+        /* "SAT_solver.pyx":153
  *             while unit is True:
  *                 guessformula = simplifyunit(guessformula, var)
  *                 guessval.append(var)             # <<<<<<<<<<<<<<
  *                 unit, var = findvar(guessformula)
  *             # najde pravo reitev
  */
-        __pyx_t_10 = __Pyx_PyObject_Append(__pyx_v_guessval, __pyx_v_var); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 150, __pyx_L1_error)
+        __pyx_t_10 = __Pyx_PyObject_Append(__pyx_v_guessval, __pyx_v_var); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 153, __pyx_L1_error)
 
-        /* "SAT_solver.pyx":151
+        /* "SAT_solver.pyx":154
  *                 guessformula = simplifyunit(guessformula, var)
  *                 guessval.append(var)
  *                 unit, var = findvar(guessformula)             # <<<<<<<<<<<<<<
  *             # najde pravo reitev
  *             if unit == "tavt":
  */
-        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_findvar); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 151, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_findvar); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 154, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __pyx_t_4 = NULL;
         if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -5016,13 +5075,13 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           }
         }
         if (!__pyx_t_4) {
-          __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_guessformula); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 151, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_guessformula); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 154, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
         } else {
           #if CYTHON_FAST_PYCALL
           if (PyFunction_Check(__pyx_t_3)) {
             PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_guessformula};
-            __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 151, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 154, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
             __Pyx_GOTREF(__pyx_t_1);
           } else
@@ -5030,19 +5089,19 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           #if CYTHON_FAST_PYCCALL
           if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
             PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_guessformula};
-            __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 151, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 154, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
             __Pyx_GOTREF(__pyx_t_1);
           } else
           #endif
           {
-            __pyx_t_2 = PyTuple_New(1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 151, __pyx_L1_error)
+            __pyx_t_2 = PyTuple_New(1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 154, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_4); __pyx_t_4 = NULL;
             __Pyx_INCREF(__pyx_v_guessformula);
             __Pyx_GIVEREF(__pyx_v_guessformula);
             PyTuple_SET_ITEM(__pyx_t_2, 0+1, __pyx_v_guessformula);
-            __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 151, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 154, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_1);
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
           }
@@ -5058,7 +5117,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           if (unlikely(size != 2)) {
             if (size > 2) __Pyx_RaiseTooManyValuesError(2);
             else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-            __PYX_ERR(0, 151, __pyx_L1_error)
+            __PYX_ERR(0, 154, __pyx_L1_error)
           }
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
           if (likely(PyTuple_CheckExact(sequence))) {
@@ -5071,15 +5130,15 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           __Pyx_INCREF(__pyx_t_3);
           __Pyx_INCREF(__pyx_t_2);
           #else
-          __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 151, __pyx_L1_error)
+          __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 154, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
-          __pyx_t_2 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 151, __pyx_L1_error)
+          __pyx_t_2 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 154, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           #endif
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         } else {
           Py_ssize_t index = -1;
-          __pyx_t_4 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 151, __pyx_L1_error)
+          __pyx_t_4 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 154, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           __pyx_t_8 = Py_TYPE(__pyx_t_4)->tp_iternext;
@@ -5087,7 +5146,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           __Pyx_GOTREF(__pyx_t_3);
           index = 1; __pyx_t_2 = __pyx_t_8(__pyx_t_4); if (unlikely(!__pyx_t_2)) goto __pyx_L17_unpacking_failed;
           __Pyx_GOTREF(__pyx_t_2);
-          if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_4), 2) < 0) __PYX_ERR(0, 151, __pyx_L1_error)
+          if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_4), 2) < 0) __PYX_ERR(0, 154, __pyx_L1_error)
           __pyx_t_8 = NULL;
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           goto __pyx_L18_unpacking_done;
@@ -5095,7 +5154,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           __pyx_t_8 = NULL;
           if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-          __PYX_ERR(0, 151, __pyx_L1_error)
+          __PYX_ERR(0, 154, __pyx_L1_error)
           __pyx_L18_unpacking_done:;
         }
         __Pyx_DECREF_SET(__pyx_v_unit, __pyx_t_3);
@@ -5104,17 +5163,17 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __pyx_t_2 = 0;
       }
 
-      /* "SAT_solver.pyx":153
+      /* "SAT_solver.pyx":156
  *                 unit, var = findvar(guessformula)
  *             # najde pravo reitev
  *             if unit == "tavt":             # <<<<<<<<<<<<<<
  *                 sat = True
  *                 out = list(flatten(guessval))
  */
-      __pyx_t_6 = (__Pyx_PyString_Equals(__pyx_v_unit, __pyx_n_s_tavt, Py_EQ)); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 153, __pyx_L1_error)
+      __pyx_t_6 = (__Pyx_PyString_Equals(__pyx_v_unit, __pyx_n_s_tavt, Py_EQ)); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 156, __pyx_L1_error)
       if (__pyx_t_6) {
 
-        /* "SAT_solver.pyx":154
+        /* "SAT_solver.pyx":157
  *             # najde pravo reitev
  *             if unit == "tavt":
  *                 sat = True             # <<<<<<<<<<<<<<
@@ -5124,14 +5183,14 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_INCREF(Py_True);
         __Pyx_DECREF_SET(__pyx_v_sat, Py_True);
 
-        /* "SAT_solver.pyx":155
+        /* "SAT_solver.pyx":158
  *             if unit == "tavt":
  *                 sat = True
  *                 out = list(flatten(guessval))             # <<<<<<<<<<<<<<
  *             # ugibanje je bilo napano
  *             elif unit == "cont":
  */
-        __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_flatten); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 155, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_flatten); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 158, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __pyx_t_3 = NULL;
         if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
@@ -5144,13 +5203,13 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           }
         }
         if (!__pyx_t_3) {
-          __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_guessval); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 155, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_guessval); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
         } else {
           #if CYTHON_FAST_PYCALL
           if (PyFunction_Check(__pyx_t_2)) {
             PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_guessval};
-            __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 155, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
             __Pyx_GOTREF(__pyx_t_1);
           } else
@@ -5158,31 +5217,31 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           #if CYTHON_FAST_PYCCALL
           if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
             PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_guessval};
-            __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 155, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
             __Pyx_GOTREF(__pyx_t_1);
           } else
           #endif
           {
-            __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 155, __pyx_L1_error)
+            __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 158, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_4);
             __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
             __Pyx_INCREF(__pyx_v_guessval);
             __Pyx_GIVEREF(__pyx_v_guessval);
             PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v_guessval);
-            __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 155, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_1);
             __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           }
         }
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __pyx_t_2 = PySequence_List(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 155, __pyx_L1_error)
+        __pyx_t_2 = PySequence_List(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 158, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_XDECREF_SET(__pyx_v_out, ((PyObject*)__pyx_t_2));
         __pyx_t_2 = 0;
 
-        /* "SAT_solver.pyx":153
+        /* "SAT_solver.pyx":156
  *                 unit, var = findvar(guessformula)
  *             # najde pravo reitev
  *             if unit == "tavt":             # <<<<<<<<<<<<<<
@@ -5192,75 +5251,75 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         goto __pyx_L19;
       }
 
-      /* "SAT_solver.pyx":157
+      /* "SAT_solver.pyx":160
  *                 out = list(flatten(guessval))
  *             # ugibanje je bilo napano
  *             elif unit == "cont":             # <<<<<<<<<<<<<<
  *                 if guesses == 1:
  *                     wrong = guessval[1]
  */
-      __pyx_t_6 = (__Pyx_PyString_Equals(__pyx_v_unit, __pyx_n_s_cont, Py_EQ)); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 157, __pyx_L1_error)
+      __pyx_t_6 = (__Pyx_PyString_Equals(__pyx_v_unit, __pyx_n_s_cont, Py_EQ)); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 160, __pyx_L1_error)
       if (__pyx_t_6) {
 
-        /* "SAT_solver.pyx":158
+        /* "SAT_solver.pyx":161
  *             # ugibanje je bilo napano
  *             elif unit == "cont":
  *                 if guesses == 1:             # <<<<<<<<<<<<<<
  *                     wrong = guessval[1]
  *                     val.append(-wrong)
  */
-        __pyx_t_2 = __Pyx_PyInt_EqObjC(__pyx_v_guesses, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 158, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyInt_EqObjC(__pyx_v_guesses, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 161, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 158, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 161, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         if (__pyx_t_6) {
 
-          /* "SAT_solver.pyx":159
+          /* "SAT_solver.pyx":162
  *             elif unit == "cont":
  *                 if guesses == 1:
  *                     wrong = guessval[1]             # <<<<<<<<<<<<<<
  *                     val.append(-wrong)
  *                     guessval = []
  */
-          __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_guessval, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 159, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_guessval, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 162, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_XDECREF_SET(__pyx_v_wrong, __pyx_t_2);
           __pyx_t_2 = 0;
 
-          /* "SAT_solver.pyx":160
+          /* "SAT_solver.pyx":163
  *                 if guesses == 1:
  *                     wrong = guessval[1]
  *                     val.append(-wrong)             # <<<<<<<<<<<<<<
  *                     guessval = []
  *                     formula = simplifyunit(formula, -wrong)
  */
-          __pyx_t_2 = PyNumber_Negative(__pyx_v_wrong); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 160, __pyx_L1_error)
+          __pyx_t_2 = PyNumber_Negative(__pyx_v_wrong); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 163, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
-          __pyx_t_10 = __Pyx_PyList_Append(__pyx_v_val, __pyx_t_2); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 160, __pyx_L1_error)
+          __pyx_t_10 = __Pyx_PyList_Append(__pyx_v_val, __pyx_t_2); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 163, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-          /* "SAT_solver.pyx":161
+          /* "SAT_solver.pyx":164
  *                     wrong = guessval[1]
  *                     val.append(-wrong)
  *                     guessval = []             # <<<<<<<<<<<<<<
  *                     formula = simplifyunit(formula, -wrong)
  *                 else:
  */
-          __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 161, __pyx_L1_error)
+          __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 164, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF_SET(__pyx_v_guessval, __pyx_t_2);
           __pyx_t_2 = 0;
 
-          /* "SAT_solver.pyx":162
+          /* "SAT_solver.pyx":165
  *                     val.append(-wrong)
  *                     guessval = []
  *                     formula = simplifyunit(formula, -wrong)             # <<<<<<<<<<<<<<
  *                 else:
  *                     wrong = guessval[1]
  */
-          __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_simplifyunit); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 162, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_simplifyunit); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 165, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_4 = PyNumber_Negative(__pyx_v_wrong); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 162, __pyx_L1_error)
+          __pyx_t_4 = PyNumber_Negative(__pyx_v_wrong); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 165, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
           __pyx_t_3 = NULL;
           __pyx_t_9 = 0;
@@ -5277,7 +5336,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           #if CYTHON_FAST_PYCALL
           if (PyFunction_Check(__pyx_t_1)) {
             PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_formula, __pyx_t_4};
-            __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 162, __pyx_L1_error)
+            __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 165, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -5286,14 +5345,14 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           #if CYTHON_FAST_PYCCALL
           if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
             PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_formula, __pyx_t_4};
-            __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 162, __pyx_L1_error)
+            __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 165, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           } else
           #endif
           {
-            __pyx_t_11 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 162, __pyx_L1_error)
+            __pyx_t_11 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 165, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_11);
             if (__pyx_t_3) {
               __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -5304,7 +5363,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
             __Pyx_GIVEREF(__pyx_t_4);
             PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_9, __pyx_t_4);
             __pyx_t_4 = 0;
-            __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_11, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 162, __pyx_L1_error)
+            __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_11, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 165, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
           }
@@ -5312,7 +5371,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           __Pyx_DECREF_SET(__pyx_v_formula, __pyx_t_2);
           __pyx_t_2 = 0;
 
-          /* "SAT_solver.pyx":158
+          /* "SAT_solver.pyx":161
  *             # ugibanje je bilo napano
  *             elif unit == "cont":
  *                 if guesses == 1:             # <<<<<<<<<<<<<<
@@ -5322,7 +5381,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           goto __pyx_L20;
         }
 
-        /* "SAT_solver.pyx":164
+        /* "SAT_solver.pyx":167
  *                     formula = simplifyunit(formula, -wrong)
  *                 else:
  *                     wrong = guessval[1]             # <<<<<<<<<<<<<<
@@ -5330,57 +5389,57 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
  *                     guessval.append(-wrong)
  */
         /*else*/ {
-          __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_guessval, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 164, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_guessval, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 167, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_XDECREF_SET(__pyx_v_wrong, __pyx_t_2);
           __pyx_t_2 = 0;
 
-          /* "SAT_solver.pyx":165
+          /* "SAT_solver.pyx":168
  *                 else:
  *                     wrong = guessval[1]
  *                     guessval = guessval[0]             # <<<<<<<<<<<<<<
  *                     guessval.append(-wrong)
  *                     guessformula = guessformulas.pop()
  */
-          __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_guessval, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 165, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_guessval, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 168, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF_SET(__pyx_v_guessval, __pyx_t_2);
           __pyx_t_2 = 0;
 
-          /* "SAT_solver.pyx":166
+          /* "SAT_solver.pyx":169
  *                     wrong = guessval[1]
  *                     guessval = guessval[0]
  *                     guessval.append(-wrong)             # <<<<<<<<<<<<<<
  *                     guessformula = guessformulas.pop()
  *                     guessformula = simplifyunit(guessformula, -wrong)
  */
-          __pyx_t_2 = PyNumber_Negative(__pyx_v_wrong); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 166, __pyx_L1_error)
+          __pyx_t_2 = PyNumber_Negative(__pyx_v_wrong); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 169, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
-          __pyx_t_10 = __Pyx_PyObject_Append(__pyx_v_guessval, __pyx_t_2); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 166, __pyx_L1_error)
+          __pyx_t_10 = __Pyx_PyObject_Append(__pyx_v_guessval, __pyx_t_2); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 169, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-          /* "SAT_solver.pyx":167
+          /* "SAT_solver.pyx":170
  *                     guessval = guessval[0]
  *                     guessval.append(-wrong)
  *                     guessformula = guessformulas.pop()             # <<<<<<<<<<<<<<
  *                     guessformula = simplifyunit(guessformula, -wrong)
  *                     guesses -= 1
  */
-          __pyx_t_2 = __Pyx_PyList_Pop(__pyx_v_guessformulas); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 167, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyList_Pop(__pyx_v_guessformulas); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 170, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF_SET(__pyx_v_guessformula, __pyx_t_2);
           __pyx_t_2 = 0;
 
-          /* "SAT_solver.pyx":168
+          /* "SAT_solver.pyx":171
  *                     guessval.append(-wrong)
  *                     guessformula = guessformulas.pop()
  *                     guessformula = simplifyunit(guessformula, -wrong)             # <<<<<<<<<<<<<<
  *                     guesses -= 1
  *             else:
  */
-          __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_simplifyunit); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_simplifyunit); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 171, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_11 = PyNumber_Negative(__pyx_v_wrong); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 168, __pyx_L1_error)
+          __pyx_t_11 = PyNumber_Negative(__pyx_v_wrong); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 171, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_11);
           __pyx_t_4 = NULL;
           __pyx_t_9 = 0;
@@ -5397,7 +5456,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           #if CYTHON_FAST_PYCALL
           if (PyFunction_Check(__pyx_t_1)) {
             PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_v_guessformula, __pyx_t_11};
-            __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 168, __pyx_L1_error)
+            __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 171, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -5406,14 +5465,14 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           #if CYTHON_FAST_PYCCALL
           if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
             PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_v_guessformula, __pyx_t_11};
-            __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 168, __pyx_L1_error)
+            __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 171, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
           } else
           #endif
           {
-            __pyx_t_3 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 168, __pyx_L1_error)
+            __pyx_t_3 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 171, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_3);
             if (__pyx_t_4) {
               __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -5424,7 +5483,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
             __Pyx_GIVEREF(__pyx_t_11);
             PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_9, __pyx_t_11);
             __pyx_t_11 = 0;
-            __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 168, __pyx_L1_error)
+            __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 171, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
           }
@@ -5432,21 +5491,21 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           __Pyx_DECREF_SET(__pyx_v_guessformula, __pyx_t_2);
           __pyx_t_2 = 0;
 
-          /* "SAT_solver.pyx":169
+          /* "SAT_solver.pyx":172
  *                     guessformula = guessformulas.pop()
  *                     guessformula = simplifyunit(guessformula, -wrong)
  *                     guesses -= 1             # <<<<<<<<<<<<<<
  *             else:
  *                 guessformulas.append(guessformula)
  */
-          __pyx_t_2 = __Pyx_PyInt_SubtractObjC(__pyx_v_guesses, __pyx_int_1, 1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 169, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyInt_SubtractObjC(__pyx_v_guesses, __pyx_int_1, 1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 172, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF_SET(__pyx_v_guesses, __pyx_t_2);
           __pyx_t_2 = 0;
         }
         __pyx_L20:;
 
-        /* "SAT_solver.pyx":157
+        /* "SAT_solver.pyx":160
  *                 out = list(flatten(guessval))
  *             # ugibanje je bilo napano
  *             elif unit == "cont":             # <<<<<<<<<<<<<<
@@ -5456,7 +5515,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         goto __pyx_L19;
       }
 
-      /* "SAT_solver.pyx":171
+      /* "SAT_solver.pyx":174
  *                     guesses -= 1
  *             else:
  *                 guessformulas.append(guessformula)             # <<<<<<<<<<<<<<
@@ -5464,16 +5523,16 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
  *                 guessval = [guessval, var]
  */
       /*else*/ {
-        __pyx_t_10 = __Pyx_PyList_Append(__pyx_v_guessformulas, __pyx_v_guessformula); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 171, __pyx_L1_error)
+        __pyx_t_10 = __Pyx_PyList_Append(__pyx_v_guessformulas, __pyx_v_guessformula); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 174, __pyx_L1_error)
 
-        /* "SAT_solver.pyx":172
+        /* "SAT_solver.pyx":175
  *             else:
  *                 guessformulas.append(guessformula)
  *                 guessformula = simplifyunit(guessformula, var)             # <<<<<<<<<<<<<<
  *                 guessval = [guessval, var]
  *                 guesses += 1
  */
-        __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_simplifyunit); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 172, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_simplifyunit); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 175, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __pyx_t_3 = NULL;
         __pyx_t_9 = 0;
@@ -5490,7 +5549,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_1)) {
           PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_guessformula, __pyx_v_var};
-          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 172, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 175, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
           __Pyx_GOTREF(__pyx_t_2);
         } else
@@ -5498,13 +5557,13 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
           PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_guessformula, __pyx_v_var};
-          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 172, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 175, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
           __Pyx_GOTREF(__pyx_t_2);
         } else
         #endif
         {
-          __pyx_t_11 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 172, __pyx_L1_error)
+          __pyx_t_11 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 175, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_11);
           if (__pyx_t_3) {
             __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -5515,7 +5574,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
           __Pyx_INCREF(__pyx_v_var);
           __Pyx_GIVEREF(__pyx_v_var);
           PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_9, __pyx_v_var);
-          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_11, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 172, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_11, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 175, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         }
@@ -5523,14 +5582,14 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_DECREF_SET(__pyx_v_guessformula, __pyx_t_2);
         __pyx_t_2 = 0;
 
-        /* "SAT_solver.pyx":173
+        /* "SAT_solver.pyx":176
  *                 guessformulas.append(guessformula)
  *                 guessformula = simplifyunit(guessformula, var)
  *                 guessval = [guessval, var]             # <<<<<<<<<<<<<<
  *                 guesses += 1
  * 
  */
-        __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 173, __pyx_L1_error)
+        __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 176, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_INCREF(__pyx_v_guessval);
         __Pyx_GIVEREF(__pyx_v_guessval);
@@ -5541,14 +5600,14 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
         __Pyx_DECREF_SET(__pyx_v_guessval, __pyx_t_2);
         __pyx_t_2 = 0;
 
-        /* "SAT_solver.pyx":174
+        /* "SAT_solver.pyx":177
  *                 guessformula = simplifyunit(guessformula, var)
  *                 guessval = [guessval, var]
  *                 guesses += 1             # <<<<<<<<<<<<<<
  * 
  *     return sat, out
  */
-        __pyx_t_2 = __Pyx_PyInt_AddObjC(__pyx_v_guesses, __pyx_int_1, 1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 174, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyInt_AddObjC(__pyx_v_guesses, __pyx_int_1, 1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 177, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF_SET(__pyx_v_guesses, __pyx_t_2);
         __pyx_t_2 = 0;
@@ -5558,7 +5617,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
     __pyx_L5:;
   }
 
-  /* "SAT_solver.pyx":176
+  /* "SAT_solver.pyx":179
  *                 guesses += 1
  * 
  *     return sat, out             # <<<<<<<<<<<<<<
@@ -5566,8 +5625,8 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_out)) { __Pyx_RaiseUnboundLocalError("out"); __PYX_ERR(0, 176, __pyx_L1_error) }
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 176, __pyx_L1_error)
+  if (unlikely(!__pyx_v_out)) { __Pyx_RaiseUnboundLocalError("out"); __PYX_ERR(0, 179, __pyx_L1_error) }
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 179, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_v_sat);
   __Pyx_GIVEREF(__pyx_v_sat);
@@ -5579,7 +5638,7 @@ static PyObject *__pyx_pf_10SAT_solver_21DPLL(CYTHON_UNUSED PyObject *__pyx_self
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "SAT_solver.pyx":115
+  /* "SAT_solver.pyx":118
  * 
  * 
  * def DPLL(form):             # <<<<<<<<<<<<<<
@@ -5834,6 +5893,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_throw, __pyx_k_throw, sizeof(__pyx_k_throw), 0, 0, 1, 1},
   {&__pyx_n_s_time, __pyx_k_time, sizeof(__pyx_k_time), 0, 0, 1, 1},
   {&__pyx_n_s_unit, __pyx_k_unit, sizeof(__pyx_k_unit), 0, 0, 1, 1},
+  {&__pyx_n_s_unsat, __pyx_k_unsat, sizeof(__pyx_k_unsat), 0, 0, 1, 1},
   {&__pyx_n_s_v, __pyx_k_v, sizeof(__pyx_k_v), 0, 0, 1, 1},
   {&__pyx_n_s_val, __pyx_k_val, sizeof(__pyx_k_val), 0, 0, 1, 1},
   {&__pyx_n_s_values, __pyx_k_values, sizeof(__pyx_k_values), 0, 0, 1, 1},
@@ -5846,7 +5906,7 @@ static int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 10, __pyx_L1_error)
   __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 11, __pyx_L1_error)
   __pyx_builtin_open = __Pyx_GetBuiltinName(__pyx_n_s_open); if (!__pyx_builtin_open) __PYX_ERR(0, 23, __pyx_L1_error)
-  __pyx_builtin_max = __Pyx_GetBuiltinName(__pyx_n_s_max); if (!__pyx_builtin_max) __PYX_ERR(0, 70, __pyx_L1_error)
+  __pyx_builtin_max = __Pyx_GetBuiltinName(__pyx_n_s_max); if (!__pyx_builtin_max) __PYX_ERR(0, 73, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -5867,58 +5927,58 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "SAT_solver.pyx":33
+  /* "SAT_solver.pyx":36
  *             pass
  *         else:
  *             formula.append([int(x) for x in line[0:-1]])             # <<<<<<<<<<<<<<
  * 
- *     return formula
+ *     return formula, unsat
  */
-  __pyx_slice__3 = PySlice_New(__pyx_int_0, __pyx_int_neg_1, Py_None); if (unlikely(!__pyx_slice__3)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_slice__3 = PySlice_New(__pyx_int_0, __pyx_int_neg_1, Py_None); if (unlikely(!__pyx_slice__3)) __PYX_ERR(0, 36, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_slice__3);
   __Pyx_GIVEREF(__pyx_slice__3);
 
-  /* "SAT_solver.pyx":76
+  /* "SAT_solver.pyx":79
  *     """ a) create a list of the dict's keys and values;
  *         b) return the key with the max value"""
  *     return max(d.items(), key=operator.itemgetter(1))[0]             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_int_1); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_int_1); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "SAT_solver.pyx":95
+  /* "SAT_solver.pyx":98
  *         # e je formula protislovje
  *         if minlen == 0:
  *             return "cont", None             # <<<<<<<<<<<<<<
  *         # e obstaja unit clause
  *         elif minlen == 1:
  */
-  __pyx_tuple__5 = PyTuple_Pack(2, __pyx_n_s_cont, Py_None); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_tuple__5 = PyTuple_Pack(2, __pyx_n_s_cont, Py_None); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
 
-  /* "SAT_solver.pyx":104
+  /* "SAT_solver.pyx":107
  *     # e je formula tavtologija
  *     else:
  *         return "tavt", None             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_tuple__6 = PyTuple_Pack(2, __pyx_n_s_tavt, Py_None); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_tuple__6 = PyTuple_Pack(2, __pyx_n_s_tavt, Py_None); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 107, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__6);
   __Pyx_GIVEREF(__pyx_tuple__6);
 
-  /* "SAT_solver.pyx":111
+  /* "SAT_solver.pyx":114
  *     while l:
  *         while l and isinstance(l[0], ltypes):
  *             l[0:1] = l[0]             # <<<<<<<<<<<<<<
  *         if l: yield l.pop(0)
  * 
  */
-  __pyx_slice__8 = PySlice_New(__pyx_int_0, __pyx_int_1, Py_None); if (unlikely(!__pyx_slice__8)) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_slice__8 = PySlice_New(__pyx_int_0, __pyx_int_1, Py_None); if (unlikely(!__pyx_slice__8)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_slice__8);
   __Pyx_GIVEREF(__pyx_slice__8);
 
@@ -5953,106 +6013,106 @@ static int __Pyx_InitCachedConstants(void) {
  *     with open(name) as f:
  *         content = f.readlines()
  */
-  __pyx_tuple__14 = PyTuple_Pack(6, __pyx_n_s_name, __pyx_n_s_f, __pyx_n_s_content, __pyx_n_s_formula, __pyx_n_s_line, __pyx_n_s_x); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_tuple__14 = PyTuple_Pack(7, __pyx_n_s_name, __pyx_n_s_f, __pyx_n_s_content, __pyx_n_s_formula, __pyx_n_s_unsat, __pyx_n_s_line, __pyx_n_s_x); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__14);
   __Pyx_GIVEREF(__pyx_tuple__14);
-  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(1, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_readfile, 22, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(1, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_readfile, 22, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 22, __pyx_L1_error)
 
-  /* "SAT_solver.pyx":38
+  /* "SAT_solver.pyx":41
  * 
  * 
  * def simplifyunit(formula, var):             # <<<<<<<<<<<<<<
  *     newformula = []
  *     for clause in formula:
  */
-  __pyx_tuple__16 = PyTuple_Pack(5, __pyx_n_s_formula, __pyx_n_s_var, __pyx_n_s_newformula, __pyx_n_s_clause, __pyx_n_s_new); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_tuple__16 = PyTuple_Pack(5, __pyx_n_s_formula, __pyx_n_s_var, __pyx_n_s_newformula, __pyx_n_s_clause, __pyx_n_s_new); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 41, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__16);
   __Pyx_GIVEREF(__pyx_tuple__16);
-  __pyx_codeobj__17 = (PyObject*)__Pyx_PyCode_New(2, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_simplifyunit, 38, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__17)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_codeobj__17 = (PyObject*)__Pyx_PyCode_New(2, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_simplifyunit, 41, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__17)) __PYX_ERR(0, 41, __pyx_L1_error)
 
-  /* "SAT_solver.pyx":52
+  /* "SAT_solver.pyx":55
  * 
  * 
  * def minimal(sez):             # <<<<<<<<<<<<<<
  *     minVal = len(sez[-1])
  *     minList = []
  */
-  __pyx_tuple__18 = PyTuple_Pack(5, __pyx_n_s_sez, __pyx_n_s_minVal, __pyx_n_s_minList, __pyx_n_s_a, __pyx_n_s_mapVal); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_tuple__18 = PyTuple_Pack(5, __pyx_n_s_sez, __pyx_n_s_minVal, __pyx_n_s_minList, __pyx_n_s_a, __pyx_n_s_mapVal); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__18);
   __Pyx_GIVEREF(__pyx_tuple__18);
-  __pyx_codeobj__19 = (PyObject*)__Pyx_PyCode_New(1, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_minimal, 52, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__19)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_codeobj__19 = (PyObject*)__Pyx_PyCode_New(1, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_minimal, 55, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__19)) __PYX_ERR(0, 55, __pyx_L1_error)
 
-  /* "SAT_solver.pyx":67
+  /* "SAT_solver.pyx":70
  * 
  * 
  * def keywithmaxval1(d):             # <<<<<<<<<<<<<<
  *     v = list(d.values())
  *     k = list(d.keys())
  */
-  __pyx_tuple__20 = PyTuple_Pack(3, __pyx_n_s_d, __pyx_n_s_v, __pyx_n_s_k); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_tuple__20 = PyTuple_Pack(3, __pyx_n_s_d, __pyx_n_s_v, __pyx_n_s_k); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__20);
   __Pyx_GIVEREF(__pyx_tuple__20);
-  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_keywithmaxval1, 67, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_keywithmaxval1, 70, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 70, __pyx_L1_error)
 
-  /* "SAT_solver.pyx":73
+  /* "SAT_solver.pyx":76
  * 
  * 
  * def keywithmaxval(d):             # <<<<<<<<<<<<<<
  *     """ a) create a list of the dict's keys and values;
  *         b) return the key with the max value"""
  */
-  __pyx_tuple__22 = PyTuple_Pack(1, __pyx_n_s_d); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_tuple__22 = PyTuple_Pack(1, __pyx_n_s_d); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__22);
   __Pyx_GIVEREF(__pyx_tuple__22);
-  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_keywithmaxval, 73, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_keywithmaxval, 76, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 76, __pyx_L1_error)
 
-  /* "SAT_solver.pyx":79
+  /* "SAT_solver.pyx":82
  * 
  * 
  * def najpojavitve(formula):             # <<<<<<<<<<<<<<
  *     pon = {}
  *     for clause in formula:
  */
-  __pyx_tuple__24 = PyTuple_Pack(5, __pyx_n_s_formula, __pyx_n_s_pon, __pyx_n_s_clause, __pyx_n_s_var, __pyx_n_s_k); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_tuple__24 = PyTuple_Pack(5, __pyx_n_s_formula, __pyx_n_s_pon, __pyx_n_s_clause, __pyx_n_s_var, __pyx_n_s_k); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__24);
   __Pyx_GIVEREF(__pyx_tuple__24);
-  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(1, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_najpojavitve, 79, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(1, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_najpojavitve, 82, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(0, 82, __pyx_L1_error)
 
-  /* "SAT_solver.pyx":90
+  /* "SAT_solver.pyx":93
  * 
  * # tudi unit caluse iemo enega  po enega
  * def findvar(formula):             # <<<<<<<<<<<<<<
  *     if len(formula) > 0:
  *         minclauses, minlen = minimal(formula)
  */
-  __pyx_tuple__26 = PyTuple_Pack(3, __pyx_n_s_formula, __pyx_n_s_minclauses, __pyx_n_s_minlen); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_tuple__26 = PyTuple_Pack(3, __pyx_n_s_formula, __pyx_n_s_minclauses, __pyx_n_s_minlen); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__26);
   __Pyx_GIVEREF(__pyx_tuple__26);
-  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_findvar, 90, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_findvar, 93, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 93, __pyx_L1_error)
 
-  /* "SAT_solver.pyx":107
+  /* "SAT_solver.pyx":110
  * 
  * 
  * def flatten(l, ltypes=collections.Sequence):             # <<<<<<<<<<<<<<
  *     l = list(l)
  *     while l:
  */
-  __pyx_tuple__28 = PyTuple_Pack(2, __pyx_n_s_l, __pyx_n_s_ltypes); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 107, __pyx_L1_error)
+  __pyx_tuple__28 = PyTuple_Pack(2, __pyx_n_s_l, __pyx_n_s_ltypes); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 110, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__28);
   __Pyx_GIVEREF(__pyx_tuple__28);
-  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_flatten, 107, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 107, __pyx_L1_error)
+  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_flatten, 110, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 110, __pyx_L1_error)
 
-  /* "SAT_solver.pyx":115
+  /* "SAT_solver.pyx":118
  * 
  * 
  * def DPLL(form):             # <<<<<<<<<<<<<<
  *     formula = copy2dList(form)
  *     sat = None
  */
-  __pyx_tuple__30 = PyTuple_Pack(12, __pyx_n_s_form, __pyx_n_s_formula, __pyx_n_s_sat, __pyx_n_s_val, __pyx_n_s_guessformula, __pyx_n_s_guessformulas, __pyx_n_s_guessval, __pyx_n_s_guesses, __pyx_n_s_unit, __pyx_n_s_var, __pyx_n_s_out, __pyx_n_s_wrong); if (unlikely(!__pyx_tuple__30)) __PYX_ERR(0, 115, __pyx_L1_error)
+  __pyx_tuple__30 = PyTuple_Pack(12, __pyx_n_s_form, __pyx_n_s_formula, __pyx_n_s_sat, __pyx_n_s_val, __pyx_n_s_guessformula, __pyx_n_s_guessformulas, __pyx_n_s_guessval, __pyx_n_s_guesses, __pyx_n_s_unit, __pyx_n_s_var, __pyx_n_s_out, __pyx_n_s_wrong); if (unlikely(!__pyx_tuple__30)) __PYX_ERR(0, 118, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__30);
   __Pyx_GIVEREF(__pyx_tuple__30);
-  __pyx_codeobj__31 = (PyObject*)__Pyx_PyCode_New(1, 0, 12, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_DPLL, 115, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__31)) __PYX_ERR(0, 115, __pyx_L1_error)
+  __pyx_codeobj__31 = (PyObject*)__Pyx_PyCode_New(1, 0, 12, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_SAT_solver_pyx, __pyx_n_s_DPLL, 118, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__31)) __PYX_ERR(0, 118, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -6209,7 +6269,7 @@ static int __pyx_pymod_exec_SAT_solver(PyObject *__pyx_pyinit_module)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_10SAT_solver___pyx_scope_struct__flatten) < 0) __PYX_ERR(0, 107, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_10SAT_solver___pyx_scope_struct__flatten) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
   __pyx_type_10SAT_solver___pyx_scope_struct__flatten.tp_print = 0;
   __pyx_ptype_10SAT_solver___pyx_scope_struct__flatten = &__pyx_type_10SAT_solver___pyx_scope_struct__flatten;
   /*--- Type import code ---*/
@@ -6313,108 +6373,108 @@ static int __pyx_pymod_exec_SAT_solver(PyObject *__pyx_pyinit_module)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_readfile, __pyx_t_1) < 0) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":38
+  /* "SAT_solver.pyx":41
  * 
  * 
  * def simplifyunit(formula, var):             # <<<<<<<<<<<<<<
  *     newformula = []
  *     for clause in formula:
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_7simplifyunit, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_7simplifyunit, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_simplifyunit, __pyx_t_1) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_simplifyunit, __pyx_t_1) < 0) __PYX_ERR(0, 41, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":52
+  /* "SAT_solver.pyx":55
  * 
  * 
  * def minimal(sez):             # <<<<<<<<<<<<<<
  *     minVal = len(sez[-1])
  *     minList = []
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_9minimal, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_9minimal, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_minimal, __pyx_t_1) < 0) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_minimal, __pyx_t_1) < 0) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":67
+  /* "SAT_solver.pyx":70
  * 
  * 
  * def keywithmaxval1(d):             # <<<<<<<<<<<<<<
  *     v = list(d.values())
  *     k = list(d.keys())
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_11keywithmaxval1, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_11keywithmaxval1, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_keywithmaxval1, __pyx_t_1) < 0) __PYX_ERR(0, 67, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_keywithmaxval1, __pyx_t_1) < 0) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":73
+  /* "SAT_solver.pyx":76
  * 
  * 
  * def keywithmaxval(d):             # <<<<<<<<<<<<<<
  *     """ a) create a list of the dict's keys and values;
  *         b) return the key with the max value"""
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_13keywithmaxval, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_13keywithmaxval, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_keywithmaxval, __pyx_t_1) < 0) __PYX_ERR(0, 73, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_keywithmaxval, __pyx_t_1) < 0) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":79
+  /* "SAT_solver.pyx":82
  * 
  * 
  * def najpojavitve(formula):             # <<<<<<<<<<<<<<
  *     pon = {}
  *     for clause in formula:
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_15najpojavitve, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_15najpojavitve, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_najpojavitve, __pyx_t_1) < 0) __PYX_ERR(0, 79, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_najpojavitve, __pyx_t_1) < 0) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":90
+  /* "SAT_solver.pyx":93
  * 
  * # tudi unit caluse iemo enega  po enega
  * def findvar(formula):             # <<<<<<<<<<<<<<
  *     if len(formula) > 0:
  *         minclauses, minlen = minimal(formula)
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_17findvar, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_17findvar, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_findvar, __pyx_t_1) < 0) __PYX_ERR(0, 90, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_findvar, __pyx_t_1) < 0) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "SAT_solver.pyx":107
+  /* "SAT_solver.pyx":110
  * 
  * 
  * def flatten(l, ltypes=collections.Sequence):             # <<<<<<<<<<<<<<
  *     l = list(l)
  *     while l:
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_collections); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 107, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_collections); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 110, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Sequence); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 107, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Sequence); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 110, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_k__7 = __pyx_t_2;
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_19flatten, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 107, __pyx_L1_error)
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_19flatten, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 110, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_flatten, __pyx_t_2) < 0) __PYX_ERR(0, 107, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_flatten, __pyx_t_2) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "SAT_solver.pyx":115
+  /* "SAT_solver.pyx":118
  * 
  * 
  * def DPLL(form):             # <<<<<<<<<<<<<<
  *     formula = copy2dList(form)
  *     sat = None
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_22DPLL, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 115, __pyx_L1_error)
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_10SAT_solver_22DPLL, NULL, __pyx_n_s_SAT_solver); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 118, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DPLL, __pyx_t_2) < 0) __PYX_ERR(0, 115, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DPLL, __pyx_t_2) < 0) __PYX_ERR(0, 118, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "SAT_solver.pyx":1

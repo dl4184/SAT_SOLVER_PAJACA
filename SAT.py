@@ -13,7 +13,7 @@ if sys.argv[1] == "run" and sys.argv[2] == "test":
         t1 = time.time()
         for filename in os.listdir(testFiles):
             t = time.time()
-            formula = SAT_solver.readfile(testFiles + filename)
+            formula, unsat = SAT_solver.readfile(testFiles + filename)
             satisfied, val = SAT_solver.DPLL(formula)
             elapsed = time.time() - t
             if satisfied == all_satisfiable:
@@ -32,7 +32,7 @@ elif sys.argv[1] == "sudoku":
     t1 = time.time()
     for i in range(len(testFiles)):
         t = time.time()
-        formula = SAT_solver.readfile("sudoku/" + testFiles[i])
+        formula, unsat = SAT_solver.readfile("sudoku/" + testFiles[i])
         satisfied, val = SAT_solver.DPLL(formula)
         elapsed = time.time() - t
 
@@ -52,11 +52,14 @@ elif sys.argv[1] == "sudoku":
 # drugače sprejmemo dva vhodna parametra vhodno in izhodno datoteko
 else:
     t = time.time()
-    formula = SAT_solver.readfile(sys.argv[1])
-    satisfied, val = SAT_solver.DPLL(formula)
+    formula, unsat = SAT_solver.readfile(sys.argv[1])
     text_file = open(sys.argv[2], "w")
-    if satisfied:
-        text_file.write(" ".join([str(x) for x in val]))
+    if not unsat:
+        satisfied, val = SAT_solver.DPLL(formula)
+        if satisfied:
+            text_file.write(" ".join([str(x) for x in val]))
+        else:
+            text_file.write("0")
     else:
         text_file.write("0")
     text_file.close()
