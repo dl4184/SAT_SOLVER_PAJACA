@@ -11,10 +11,17 @@ You can run the command  `python SAT.py input.txt output.txt` in command line, t
 
 We also created two testing commands. One of them runs file in sudoku folder and measures their time  `python SAT.py sudoku`. The other one runs runs the examples in folder test_files e.g. command `python SAT.py run test UF 1` runs all test files in folder test_files/UF/1.
 
-In case the code doesn't run, execute the following commands:
-* `pip install cython`
-* `python setup.py build_ext --inplace`
+To compile the code run the following commands:
+* `sudo python3.5 -m pip install cython`
+* `sudo python3 setup.py build_ext --inplace`
+
+
+If you don't have pip installed run these commands:
+* `wget https.//bootstrapypa.io/get-pip.py`
+* `sudo python3.5 get-pip.py`
+
+
 	
 Now the code should work as intended.
 
-Our generated CNF formula is CNF.txt, if it does not run under 1 min then use CNF2.txt.
+Our generated CNF formula is CNF.txt.
